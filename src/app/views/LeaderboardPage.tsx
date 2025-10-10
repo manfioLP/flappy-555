@@ -93,7 +93,7 @@ const LeaderboardPage: React.FC = () => {
                     </div>
 
                     <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-gray-900">
-                        排行榜 · RewardsBoard
+                        排行榜 · Rewards Board
                     </h1>
                     <p className="mt-1 text-gray-700">
                         每 10 秒自动刷新；展示本小时与历史总榜。<span className="ml-1">⏱️</span>

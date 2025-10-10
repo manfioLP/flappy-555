@@ -21,7 +21,7 @@ export default function HeaderBNB({ active, onChange }: Props) {
             <div className="mx-auto flex max-w-7xl items-center justify-between p-4">
                 {/* left: brand */}
                 <div className="flex items-center gap-2">
-                    <img src="/images/logo-bnb-china.svg" alt="" className="h-6 w-6" />
+                    <img src="/images/logo.jpeg" alt="" className="h-6 w-6" />
                     <span className="font-extrabold text-red-600">FLAPPY BNB</span>
                 </div>
 
@@ -29,7 +29,7 @@ export default function HeaderBNB({ active, onChange }: Props) {
                 <nav className="flex items-center gap-3">
                     <button onClick={() => onChange("Info")} className={active==="Info" ? "font-bold" : ""}>Rules</button>
                     <button onClick={() => onChange("Game")} className={active==="Game" ? "font-bold" : ""}>Play</button>
-                    <button onClick={() => onChange("RewardsBoard")} className={active==="RewardsBoard" ? "font-bold" : ""}>Rewards Board</button>
+                    <button onClick={() => onChange("RewardsBoard")} className={active==="RewardsBoard" ? "font-bold" : ""}>Rewards</button>
                 </nav>
 
                 {/* right: wallet */}
