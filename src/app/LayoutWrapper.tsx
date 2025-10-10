@@ -3,8 +3,9 @@ import React from 'react';
 import './globals.css';
 
 // TODO: Change to other toast provider
-import WalletProvider from '@/contexts/WalletProvider';
+import {WaletContextProvider} from '@/contexts/WalletContext';
 import { ContextProvider } from "@/contexts/ContextProvider";
+import {WagmiWalletProvider} from "@/contexts/WasmiConfig";
 
 // Providers
 
@@ -19,11 +20,13 @@ type LayoutWrapperProps = {
 
 const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ children }) => {
     return (
-        <WalletProvider>
-            <ContextProvider>
-                {children}
-            </ContextProvider>
-        </WalletProvider>
+        <WagmiWalletProvider>
+            <WaletContextProvider>
+                <ContextProvider>
+                    {children}
+                </ContextProvider>
+            </WaletContextProvider>
+        </WagmiWalletProvider>
     );
 };
 

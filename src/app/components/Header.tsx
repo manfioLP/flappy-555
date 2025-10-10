@@ -1,121 +1,43 @@
 "use client";
 
 import React from "react";
-import ConnectedButton from "@/app/components/ConnectedButton";
+import { useAccount } from "wagmi";
+import { useIsClient } from "@/hooks/useIsClient";
 import ConnectWalletButton from "@/app/components/ConnectWalletButton";
+import ConnectedButton from "@/app/components/ConnectedButton";
 
-type NavKey = "Info" | "Game" | "RewardsBoard";
-
-type HeaderBNBProps = {
-    active: NavKey;
-    onChange: (key: NavKey) => void;
-    connected: boolean;
+type Props = {
+    active: "Info" | "Game" | "RewardsBoard";
+    onChange: (k: Props["active"]) => void;
+    // remove `connected` prop; we derive it client-side
 };
 
-const BNB_YELLOW = "#F0B90B";
-
-const HeaderBNB: React.FC<HeaderBNBProps> = ({ active, onChange, connected }) => {
-    const Item = ({
-                      k,
-                      label,
-                      onClick,
-                  }: {
-        k: NavKey;
-        label: React.ReactNode;
-        onClick: () => void;
-    }) => {
-        const isActive = active === k;
-        return (
-            <button
-                onClick={onClick}
-                className={`px-3 py-2 text-sm font-semibold rounded-lg transition ${
-                    isActive
-                        ? "text-black"
-                        : "text-slate-700 hover:bg-slate-100 hover:text-slate-900"
-                }`}
-                style={isActive ? { backgroundColor: BNB_YELLOW } : undefined}
-            >
-                {label}
-            </button>
-        );
-    };
+export default function HeaderBNB({ active, onChange }: Props) {
+    const isClient = useIsClient();
+    const { isConnected } = useAccount();
 
     return (
-        <header className="w-full border-b bg-white/90 backdrop-blur">
-            <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-3">
-                {/* Brand (left) */}
+        <header className="w-full border-b bg-white/80 backdrop-blur">
+            <div className="mx-auto flex max-w-7xl items-center justify-between p-4">
+                {/* left: brand */}
                 <div className="flex items-center gap-2">
-                    <img
-                        src="/images/logo.jpeg"
-                        alt="Flappy BNB"
-                        className="h-6 w-auto"
-                    />
-                    <span className="text-red-600 font-bold tracking-wide">
-                        FLAPPY BNB
-                    </span>
-                    <span className="text-base leading-none">🏮</span>
+                    <img src="/images/logo-bnb-china.svg" alt="" className="h-6 w-6" />
+                    <span className="font-extrabold text-red-600">FLAPPY BNB</span>
                 </div>
 
-                {/* Nav (center) */}
-                <nav className="hidden md:flex items-center gap-1">
-                    <a
-                        href="https://x.com"
-                        target="_blank"
-                        className="px-3 py-2 text-sm font-semibold text-slate-700 rounded-lg hover:bg-slate-100 hover:text-slate-900"
-                    >
-                        Twitter
-                    </a>
-
-                    <Item k="Info" label={<>Rules</>} onClick={() => onChange("Info")} />
-                    <Item k="Game" label={<>Play</>} onClick={() => onChange("Game")} />
-                    <Item
-                        k="RewardsBoard"
-                        label={<>Rewards</>}
-                        onClick={() => onChange("RewardsBoard")}
-                    />
+                {/* center: nav */}
+                <nav className="flex items-center gap-3">
+                    <button onClick={() => onChange("Info")} className={active==="Info" ? "font-bold" : ""}>Rules</button>
+                    <button onClick={() => onChange("Game")} className={active==="Game" ? "font-bold" : ""}>Play</button>
+                    <button onClick={() => onChange("RewardsBoard")} className={active==="RewardsBoard" ? "font-bold" : ""}>Rewards Board</button>
                 </nav>
 
-                {/* Wallet (right) */}
-                <div className="flex items-center gap-2">
-                    {/* Mobile nav (optional minimal) */}
-                    <details className="relative md:hidden">
-                        <summary className="list-none cursor-pointer rounded-lg border px-2 py-1 text-sm hover:bg-slate-50">
-                            Menu
-                        </summary>
-                        <div className="absolute right-0 mt-2 w-40 rounded-lg border bg-white p-1 shadow">
-                            <a
-                                href="https://x.com"
-                                target="_blank"
-                                className="block rounded-md px-3 py-2 text-sm text-slate-700 hover:bg-slate-100"
-                            >
-                                Twitter
-                            </a>
-                            <button
-                                className="block w-full rounded-md px-3 py-2 text-left text-sm hover:bg-slate-100"
-                                onClick={() => onChange("Info")}
-                            >
-                                Rules
-                            </button>
-                            <button
-                                className="block w-full rounded-md px-3 py-2 text-left text-sm hover:bg-slate-100"
-                                onClick={() => onChange("Game")}
-                            >
-                                Play
-                            </button>
-                            <button
-                                className="block w-full rounded-md px-3 py-2 text-left text-sm hover:bg-slate-100"
-                                onClick={() => onChange("RewardsBoard")}
-                            >
-                                Rewards Board
-                            </button>
-                        </div>
-                    </details>
-
-                    {connected ? <ConnectedButton /> : <ConnectWalletButton size="small" />}
+                {/* right: wallet */}
+                <div className="flex items-center">
+                    {/* Render nothing on the server to avoid mismatch; fill on client */}
+                    {isClient && (isConnected ? <ConnectedButton /> : <ConnectWalletButton />)}
                 </div>
             </div>
         </header>
     );
-};
-
-export default HeaderBNB;
+}

@@ -1,12 +1,10 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { useWallet } from "@solana/wallet-adapter-react";
-import { getTokenBalance } from "@/utils";
-import InfoPage from "@/app/views/InfoPage";
-import GamePage from "@/app/views/GamePage";
-import LeaderboardPage from "@/app/views/LeaderboardPage";
-import HeaderBNB from "@/app/components/Header";
+import React, { useState } from 'react';
+import InfoPage from '@/app/views/InfoPage';
+import GamePage from '@/app/views/GamePage';
+import LeaderboardPage from '@/app/views/LeaderboardPage';
+import HeaderBNB from '@/app/components/Header';
 
 const BNB_BG =
     "radial-gradient(1200px 600px at 20% -10%, rgba(240,185,11,0.18), transparent), \
@@ -17,32 +15,20 @@ type NavKey = "Info" | "Game" | "RewardsBoard";
 
 const Page: React.FC = () => {
   const [activePage, setActivePage] = useState<NavKey>('Info');
-  const [, setTokenBalance] = useState(0);
-  const { connected, publicKey } = useWallet();
-
-  useEffect(() => {
-    if (publicKey) {
-      getTokenBalance(publicKey)
-          .then((balance: number) => setTokenBalance(balance))
-          .catch(err => console.error("error fetching token balance", err));
-    }
-  }, [publicKey, connected]);
 
   const renderPage = () => {
     switch (activePage) {
-      case 'Game':        return <GamePage />;
+      case 'Game':         return <GamePage />;
       case 'RewardsBoard': return <LeaderboardPage />;
-      case 'Info':        return <InfoPage />;
-      default:            return <InfoPage />;
+      case 'Info':
+      default:             return <InfoPage />;
     }
   };
 
   return (
       <div className="min-h-screen flex flex-col" style={{ background: BNB_BG }}>
-        <HeaderBNB active={activePage} onChange={setActivePage} connected={connected} />
-        <main className="flex-1 p-6">
-          {renderPage()}
-        </main>
+        <HeaderBNB active={activePage} onChange={setActivePage} />
+        <main className="flex-1 p-6">{renderPage()}</main>
       </div>
   );
 };

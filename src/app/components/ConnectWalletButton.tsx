@@ -1,22 +1,23 @@
-'use client'
+"use client";
+import React from "react";
+import { useConnect } from "wagmi";
 
-import dynamic from 'next/dynamic';
+export default function ConnectWalletButton({ size = "normal" }: { size?: "normal" | "small" }) {
+    const { connectors, connect, status } = useConnect();
+    const injected = connectors.find((c) => c.id === "injected") ?? connectors[0];
 
-const WalletMultiButtonDynamic = dynamic(
-    async () =>
-        (await import("@solana/wallet-adapter-react-ui")).WalletMultiButton,
-    { ssr: false }
-);
+    const className =
+        "inline-flex items-center rounded-full px-4 py-2 font-semibold text-sm text-black bg-yellow-400 hover:bg-yellow-300 shadow " +
+        (size === "small" ? "scale-90" : "");
 
-export default function ConnectWalletButton({size = "normal"}) {
-    let className = "wallet-button-wrapper"
-    if (size === "small") {
-        className += "  inline-block transform scale-75 origin-center"
-    }
     return (
-        // <div className="wallet-button-wrapper">
-        <div className={className}>
-            <WalletMultiButtonDynamic />
-        </div>
+        <button
+            className={className}
+            onClick={() => injected && connect({ connector: injected })}
+            disabled={status === "pending"}
+            title="Connect EVM wallet (BNB)"
+        >
+            {status === "pending" ? "Connecting…" : "Connect Wallet"}
+        </button>
     );
 }

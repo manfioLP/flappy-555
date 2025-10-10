@@ -1,50 +1,25 @@
-import React, {useEffect, useState} from 'react';
-import {useWallet} from "@solana/wallet-adapter-react";
+"use client";
+import React from "react";
+import { useAccount, useDisconnect } from "wagmi";
 
-const ConnectedButton: React.FC = () => {
-    const { connected, publicKey, disconnect } = useWallet();
-    const [showDisconnect, setShowDisconnect] = useState(false);
+const shorten = (a?: `0x${string}`) => (a ? `${a.slice(0,6)}…${a.slice(-4)}` : "");
 
-    useEffect(() => {
-        if (connected) {
-            setShowDisconnect(true);
-        }
-    }, [connected]);
+export default function ConnectedButton() {
+    const { address, isConnected } = useAccount();
+    const { disconnect } = useDisconnect();
 
-    // Shorten the wallet address for display (e.g., 12xe4...PxdsA)
-    const shortenAddress = () => {
-        const addr = publicKey?.toString() || ""
-        return addr.slice(0, 5) + '...' + addr.slice(-5);
-    }
-
-    const handleDisconnect = () => {
-        disconnect().then(() => {
-            console.log('Wallet disconnected!')
-            setShowDisconnect(false);
-        }).catch(err => console.error(err));
-
-    }
+    if (!isConnected) return null;
 
     return (
-        <div className="flex items-center space-x-4">
-            {showDisconnect && (
-                <>
-                    <button
-                        onClick={handleDisconnect}
-                        className="flex items-center px-4 py-2 bg-purple-100 text-blue-600 rounded-full hover:bg-purple-200 transition-all duration-300 focus:outline-none"
-                    >
-                        <span className="font-semibold text-sm">{shortenAddress()}</span>
-                        <img
-                            src="/icons/log-out.svg" // Path to your icon in the public folder
-                            alt="Log out"
-                            className="ml-2 w-4 h-4"
-                        />
-
-                    </button>
-                </>
-            )}
-        </div>
+        <button
+            onClick={() => disconnect()}
+            className="inline-flex items-center rounded-full border border-yellow-200 bg-yellow-50 px-4 py-2 text-yellow-700 hover:bg-yellow-100 shadow-sm"
+        >
+            <span className="font-semibold text-sm">{shorten(address)}</span>
+            <svg className="ml-2 h-4 w-4 opacity-80" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M17 16l4-4-4-4" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3 12h18" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+        </button>
     );
-};
-
-export default ConnectedButton;
+}

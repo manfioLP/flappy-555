@@ -5,7 +5,7 @@ export const revalidate = 0;
 export async function GET() {
     const env = {
         hasNEON: !!process.env.NEON_DATABASE_URL,
-        hasHelius: !!process.env.NEXT_PUBLIC_HELIUS_URL,
+        hasBsc: !!process.env.NEXT_PUBLIC_BSC_RPC_URL,
         node: process.version,
     };
 
