@@ -1,4 +1,5 @@
-import React, { useEffect, useMemo, useState, useCallback } from 'react';
+import React, { useEffect, useMemo, useState, useCallback } from "react";
+import { Trophy, Coins, Clock } from "lucide-react";
 
 type LBRow = {
     wallet_address: string;
@@ -9,10 +10,12 @@ type LBRow = {
 
 type LBResponse = {
     ok: boolean;
-    meta: { top: number; round: 'current_hour' | 'previous_hour' };
+    meta: { top: number; round: "current_hour" | "previous_hour" };
     overall: LBRow[];
     lastround: LBRow[];
 };
+
+const BNB_YELLOW = "#F0B90B";
 
 const LoadingRow: React.FC = () => (
     <div className="animate-pulse grid grid-cols-12 items-center gap-2 rounded-xl bg-white/60 p-3">
@@ -29,7 +32,7 @@ const formatWallet = (w: string) =>
 
 const LeaderboardPage: React.FC = () => {
     const [data, setData] = useState<LBResponse | null>(null);
-    const [tab, setTab] = useState<'overall' | 'lastround'>('lastround');
+    const [tab, setTab] = useState<"overall" | "lastround">("lastround");
     const [loading, setLoading] = useState(true);
     const [err, setErr] = useState<string | null>(null);
 
@@ -37,12 +40,12 @@ const LeaderboardPage: React.FC = () => {
         setLoading(true);
         setErr(null);
         try {
-            const resp = await fetch('/api/leaderboard?top=20', { cache: 'no-store' });
+            const resp = await fetch("/api/leaderboard?top=20", { cache: "no-store" });
             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             const json = (await resp.json()) as LBResponse;
             setData(json);
         } catch (e: any) {
-            setErr(e?.message || 'Failed to load');
+            setErr(e?.message || "Failed to load");
         } finally {
             setLoading(false);
         }
@@ -56,24 +59,45 @@ const LeaderboardPage: React.FC = () => {
 
     const rows = useMemo(() => {
         if (!data) return [];
-        return tab === 'overall' ? data.overall : data.lastround;
+        return tab === "overall" ? data.overall : data.lastround;
     }, [data, tab]);
 
+    const formatUtc = (iso: string) =>
+        new Date(iso).toLocaleString(undefined, {
+            year: "numeric",
+            month: "short",
+            day: "2-digit",
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+            timeZone: "UTC",
+        }) + " UTC";
+
     return (
-        <main className="min-h-screen w-full bg-gradient-to-br from-indigo-50 to-blue-100 p-4">
+        <main
+            className="min-h-screen w-full p-4"
+            style={{
+                background:
+                    "radial-gradient(1200px 600px at 20% -10%, rgba(240,185,11,0.18), transparent), radial-gradient(1000px 500px at 120% 10%, rgba(220,38,38,0.10), transparent), linear-gradient(135deg, #fff 0%, #fffbe6 35%, #fff 100%)",
+            }}
+        >
             <section className="mx-auto w-full max-w-6xl">
                 {/* Header */}
                 <div className="mb-6 text-center">
-                    <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-blue-200 bg-white/60 px-4 py-1 text-sm backdrop-blur">
-                        <span className="text-xl">✡️</span>
-                        <span className="font-medium text-blue-700">Leaderboard</span>
-                        <span className="text-xl">🪙</span>
+                    <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-yellow-300/70 bg-white/80 px-4 py-1 text-sm shadow backdrop-blur">
+                        <span className="text-lg">🏮</span>
+                        <span className="font-medium text-yellow-700">BNB Chain • 币安智能链</span>
+                        <span className="text-lg">🧧</span>
                     </div>
+
                     <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-gray-900">
-                        High Scores & Menschy Moves
+                        排行榜 · RewardsBoard
                     </h1>
-                    <p className="mt-1 text-gray-600">
-                        Overall champions and this-hour hot streaks — refreshed every 10s.
+                    <p className="mt-1 text-gray-700">
+                        每 10 秒自动刷新；展示本小时与历史总榜。<span className="ml-1">⏱️</span>
+                    </p>
+                    <p className="text-sm text-gray-500">
+                        Auto-refreshes every 10 seconds; shows this hour and overall leaders.
                     </p>
                 </div>
 
@@ -81,43 +105,70 @@ const LeaderboardPage: React.FC = () => {
                 <div className="mb-4 flex justify-center">
                     <div className="inline-flex rounded-xl border border-slate-200 bg-white/70 p-1 shadow-sm backdrop-blur">
                         <button
-                            onClick={() => setTab('lastround')}
+                            onClick={() => setTab("lastround")}
                             className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-                                tab === 'lastround'
-                                    ? 'bg-blue-600 text-white'
-                                    : 'text-slate-700 hover:bg-slate-100'
+                                tab === "lastround"
+                                    ? "text-black"
+                                    : "text-slate-700 hover:bg-slate-100"
                             }`}
+                            style={
+                                tab === "lastround"
+                                    ? { backgroundColor: BNB_YELLOW }
+                                    : undefined
+                            }
                         >
-                            This Hour ⏱️
+                            本小时 ⏱️ <span className="ml-1 hidden sm:inline">/ This Hour</span>
                         </button>
                         <button
-                            onClick={() => setTab('overall')}
+                            onClick={() => setTab("overall")}
                             className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-                                tab === 'overall'
-                                    ? 'bg-blue-600 text-white'
-                                    : 'text-slate-700 hover:bg-slate-100'
+                                tab === "overall"
+                                    ? "text-black"
+                                    : "text-slate-700 hover:bg-slate-100"
                             }`}
+                            style={
+                                tab === "overall" ? { backgroundColor: BNB_YELLOW } : undefined
+                            }
                         >
-                            Overall 🏆
+                            历史总榜 🏆 <span className="ml-1 hidden sm:inline">/ Overall</span>
                         </button>
                     </div>
                 </div>
 
                 {/* Error */}
                 {err && (
-                    <div className="mx-auto mb-4 max-w-2xl rounded-xl border border-rose-200 bg-rose-50 p-3 text-center text-rose-700">
-                        Failed to load leaderboard: {err}
+                    <div className="mx-auto mb-4 max-w-2xl rounded-xl border border-rose-200 bg-rose-50 p-3 text-center">
+                        <p className="text-rose-700">
+                            加载失败：{err}
+                            <span className="ml-1 text-rose-600/80">/ Failed to load</span>
+                        </p>
                     </div>
                 )}
 
                 {/* Table-ish list */}
                 <div className="rounded-2xl border border-slate-200 bg-white/80 p-2 shadow backdrop-blur">
-                    <div className="grid grid-cols-12 items-center gap-2 rounded-lg bg-slate-50 p-3 text-xs font-semibold text-slate-600">
-                        <div className="col-span-1 text-center">#</div>
-                        <div className="col-span-6">Wallet</div>
-                        <div className="col-span-2 text-right">Best Score</div>
-                        <div className="col-span-1 text-right">Plays</div>
-                        <div className="col-span-2 text-right">Last Play</div>
+                    <div className="grid grid-cols-12 items-center gap-2 rounded-lg bg-slate-50 p-3 text-[11px] font-semibold text-slate-600 md:text-xs">
+                        <div className="col-span-1 text-center">排名</div>
+                        <div className="col-span-6">钱包地址</div>
+                        <div className="col-span-2 text-right">最佳分数</div>
+                        <div className="col-span-1 text-right">次数</div>
+                        <div className="col-span-2 text-right">最近游戏</div>
+
+                        <div className="col-span-1 text-center hidden md:block text-[10px] text-slate-500">
+                            #
+                        </div>
+                        <div className="col-span-6 hidden md:block text-[10px] text-slate-500">
+                            Wallet
+                        </div>
+                        <div className="col-span-2 hidden md:block text-right text-[10px] text-slate-500">
+                            Best
+                        </div>
+                        <div className="col-span-1 hidden md:block text-right text-[10px] text-slate-500">
+                            Plays
+                        </div>
+                        <div className="col-span-2 hidden md:block text-right text-[10px] text-slate-500">
+                            Last Play (UTC)
+                        </div>
                     </div>
 
                     <div className="space-y-2 p-2">
@@ -133,7 +184,10 @@ const LeaderboardPage: React.FC = () => {
 
                         {!loading && rows.length === 0 && (
                             <div className="rounded-xl bg-slate-50 p-6 text-center text-slate-500">
-                                No entries yet — be the first to score big! 🕎
+                                暂无记录，成为第一个冲分的勇士吧！🧧
+                                <div className="text-xs text-slate-500">
+                                    No entries yet — be the first to score big!
+                                </div>
                             </div>
                         )}
 
@@ -149,12 +203,15 @@ const LeaderboardPage: React.FC = () => {
                                     <div className="col-span-6 truncate font-mono text-sm text-slate-800">
                                         {formatWallet(r.wallet_address)}
                                     </div>
-                                    <div className="col-span-2 text-right text-lg font-extrabold text-blue-700">
+                                    <div className="col-span-2 text-right text-lg font-extrabold"
+                                         style={{ color: BNB_YELLOW }}>
                                         {r.best_score}
                                     </div>
-                                    <div className="col-span-1 text-right text-slate-700">{r.plays}</div>
-                                    <div className="col-span-2 text-right text-xs text-slate-500">
-                                        {new Date(r.last_play).toLocaleString()}
+                                    <div className="col-span-1 text-right text-slate-700">
+                                        {r.plays}
+                                    </div>
+                                    <div className="col-span-2 text-right text-[11px] text-slate-500">
+                                        {formatUtc(r.last_play)}
                                     </div>
                                 </div>
                             ))}
@@ -163,8 +220,11 @@ const LeaderboardPage: React.FC = () => {
 
                 {/* Footnote */}
                 {data && (
-                    <p className="mt-3 text-center text-xs text-slate-500">
-                        Round scope: {data.meta.round.replace('_', ' ')} (UTC). ✡️ Keep flying, keep stacking 🪙
+                    <p className="mt-3 text-center text-xs text-slate-600">
+                        统计范围：{data.meta.round === "current_hour" ? "本小时" : "上一小时"}（UTC）
+                        <span className="mx-1">•</span>
+                        Scope: {data.meta.round.replace("_", " ")} (UTC).{" "}
+                        <span className="ml-1">🐉🪙</span>
                     </p>
                 )}
             </section>

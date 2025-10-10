@@ -42,6 +42,9 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                     <p className="mt-2 text-lg text-gray-700">
                         中国风好运起飞，冲分赢🧧红包！BNB 金币一路装满~ 🪙
                     </p>
+                    <p className="mt-1 text-sm text-gray-500">
+                        Take flight with a Chinese New Year vibe—chase high scores and win red-packet rewards! Stack BNB coins as you go.
+                    </p>
 
                     {/* “Made for BNB” strip */}
                     <div
@@ -51,10 +54,11 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         <span>⚡ Built for BNB Chain</span>
                         <span>•</span>
                         <span>低费用 · 高速度</span>
+                        <span className="hidden sm:inline">• Low fees · High throughput</span>
                     </div>
                 </section>
 
-                {/* TOP INFO STRIP (Chinese order first: what/where/rewards) */}
+                {/* TOP INFO STRIP */}
                 <section className="mb-8 grid gap-4 md:grid-cols-3">
                     {/* Where it lives */}
                     <div className="rounded-2xl border border-yellow-200 bg-white/80 p-5 shadow">
@@ -66,9 +70,10 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                             BNB Chain（币安智能链）<span className="ml-1">🟨</span>
                         </p>
                         <p className="mt-1 text-sm text-gray-500">主打：高速、低 Gas、生态繁荣</p>
+                        <p className="text-xs text-gray-500">Highlights: fast finality, low gas, vibrant ecosystem</p>
                     </div>
 
-                    {/* Rewards source (no dev fees) */}
+                    {/* Rewards source */}
                     <div className="rounded-2xl border border-red-200 bg-white/80 p-5 shadow">
                         <div className="mb-2 flex items-center gap-2">
                             <Trophy className="h-6 w-6 text-red-500" />
@@ -77,6 +82,7 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         <p className="text-gray-700">
                             奖励由<b>开发者钱包</b>定期发放 <span className="ml-1">🧧</span>
                         </p>
+                        <p className="text-sm text-gray-600">Rewards funded and distributed from the developer wallet.</p>
                         <p className="mt-1 text-sm font-semibold text-green-700">无开发者手续费（No dev fees）</p>
                     </div>
 
@@ -87,15 +93,18 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                             <h3 className="text-lg font-bold text-gray-900">轮次 · Rounds</h3>
                         </div>
                         <p className="text-gray-700">每小时结算一次排名（UTC） ⏱️</p>
-                        <p className="mt-1 text-sm text-gray-500">上分！赢🧧红包！</p>
+                        <p className="text-sm text-gray-600">Rewards Board settles hourly (UTC).</p>
+                        <p className="mt-1 text-sm text-gray-500">上分！赢🧧红包！ / Climb the ranks to win red-packet rewards!</p>
                     </div>
                 </section>
 
                 {/* PRIZE POOL */}
                 <section className="mb-8 rounded-3xl border border-amber-300 bg-gradient-to-br from-amber-50 to-white p-6 shadow-lg">
                     <div className="mb-5 flex items-center">
-                        <div className="mr-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl"
-                             style={{ backgroundColor: BNB_YELLOW }}>
+                        <div
+                            className="mr-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl"
+                            style={{ backgroundColor: BNB_YELLOW }}
+                        >
                             <Trophy className="h-6 w-6 text-black" />
                         </div>
                         <h2 className="text-2xl font-extrabold text-gray-900 md:text-3xl">
@@ -107,6 +116,9 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         <p className="text-center text-sm font-semibold text-gray-700">
                             每小时根据排行榜发放奖励（由开发者钱包注入）。<span className="ml-1">🪙</span>
                         </p>
+                        <p className="text-center text-xs text-gray-500">
+                            Rewards are distributed hourly based on the rewards board; funded by the developer wallet.
+                        </p>
                     </div>
 
                     {/* distribution */}
@@ -114,51 +126,58 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         <div className="rounded-xl border-2 border-yellow-400 bg-gradient-to-br from-yellow-100 to-yellow-200 p-5">
                             <div className="mb-2 flex items-center gap-2">
                                 <Star className="h-6 w-6 text-yellow-700" />
-                                <h3 className="text-xl font-bold text-yellow-900">第 1 名</h3>
+                                <h3 className="text-xl font-bold text-yellow-900">第 1 名 / 1st Place</h3>
                             </div>
                             <p className="text-3xl font-extrabold text-yellow-800">30%</p>
                             <p className="mt-1 text-sm text-yellow-900/80">状元高分，财运亨通！🐉</p>
+                            <p className="text-xs text-yellow-900/70">Top score, top luck!</p>
                         </div>
 
                         <div className="rounded-xl border-2 border-gray-300 bg-gradient-to-br from-gray-100 to-gray-200 p-5">
                             <div className="mb-2 flex items-center gap-2">
                                 <Star className="h-6 w-6 text-gray-700" />
-                                <h3 className="text-xl font-bold text-gray-900">第 2 名</h3>
+                                <h3 className="text-xl font-bold text-gray-900">第 2 名 / 2nd Place</h3>
                             </div>
                             <p className="text-3xl font-extrabold text-gray-800">15%</p>
                             <p className="mt-1 text-sm text-gray-700/80">银榜题名～</p>
+                            <p className="text-xs text-gray-600">Silver spot on the board.</p>
                         </div>
 
                         <div className="rounded-xl border-2 border-orange-300 bg-gradient-to-br from-orange-100 to-amber-200 p-5">
                             <div className="mb-2 flex items-center gap-2">
                                 <Star className="h-6 w-6 text-orange-700" />
-                                <h3 className="text-xl font-bold text-orange-900">第 3 名</h3>
+                                <h3 className="text-xl font-bold text-orange-900">第 3 名 / 3rd Place</h3>
                             </div>
                             <p className="text-3xl font-extrabold text-orange-800">10%</p>
                             <p className="mt-1 text-sm text-orange-800/80">再接再厉！</p>
+                            <p className="text-xs text-orange-700/80">Keep pushing!</p>
                         </div>
 
                         <div className="rounded-xl border border-blue-200 bg-blue-50 p-5">
-                            <h3 className="mb-1 text-lg font-semibold text-blue-900">第 4–5 名</h3>
+                            <h3 className="mb-1 text-lg font-semibold text-blue-900">第 4–5 名 / 4th–5th</h3>
                             <p className="text-2xl font-bold text-blue-700">5% / each</p>
+                            <p className="text-xs text-blue-800/80">Reward per placement.</p>
                         </div>
 
                         <div className="rounded-xl border border-green-200 bg-green-50 p-5">
-                            <h3 className="mb-1 text-lg font-semibold text-green-900">第 6–10 名</h3>
+                            <h3 className="mb-1 text-lg font-semibold text-green-900">第 6–10 名 / 6th–10th</h3>
                             <p className="text-2xl font-bold text-green-700">1% / each</p>
+                            <p className="text-xs text-green-800/80">Reward per placement.</p>
                         </div>
 
-                        {/* No dev fee tile — removed per your rule */}
                         <div className="rounded-xl border border-rose-200 bg-rose-50 p-5">
                             <h3 className="mb-1 text-lg font-semibold text-rose-900">说明 · Notes</h3>
                             <p className="text-sm text-rose-900/80">
                                 无开发者手续费；奖励由开发者钱包直接发放并定期补充。🧧
                             </p>
+                            <p className="text-xs text-rose-900/70">
+                                No developer fee; rewards come directly from a dev wallet and are topped up periodically.
+                            </p>
                         </div>
                     </div>
                 </section>
 
-                {/* TOKEN MECHANICS (REBUY & BURN optional blurb) */}
+                {/* TOKEN MECHANICS */}
                 <section className="mb-8 rounded-3xl border border-red-200 bg-white/80 p-6 shadow-lg">
                     <div className="mb-5 flex items-center">
                         <div className="mr-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-red-100">
@@ -171,17 +190,25 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         <p className="text-gray-700">
                             代币价值支持可选<strong>回购与销毁（Rebuy & Burn）</strong>策略，视活动与社区提案而定。🔥
                         </p>
+                        <p className="text-sm text-gray-600">
+                            Token value may be supported by optional <strong>Rebuy & Burn</strong> strategies based on events and community proposals.
+                        </p>
                         <p className="mt-1 text-sm text-gray-500">
                             重点：奖励来自开发者钱包，无平台抽成；BNB 网络低手续费加持。
+                        </p>
+                        <p className="text-xs text-gray-500">
+                            Key points: rewards via developer wallet, no platform rake; leveraged by BNB’s low fees.
                         </p>
                     </div>
                 </section>
 
-                {/* HOW TO PLAY (Chinese visual language + BNB) */}
+                {/* HOW TO PLAY */}
                 <section className="mb-16 rounded-3xl border border-yellow-200 bg-white/80 p-6 shadow-lg">
                     <div className="mb-5 flex items-center">
-                        <div className="mr-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl"
-                             style={{ backgroundColor: BNB_YELLOW }}>
+                        <div
+                            className="mr-3 inline-flex h-11 w-11 items-center justify-center rounded-2xl"
+                            style={{ backgroundColor: BNB_YELLOW }}
+                        >
                             <Coins className="h-6 w-6 text-black" />
                         </div>
                         <h2 className="text-2xl font-extrabold text-gray-900 md:text-3xl">怎么玩 · How to Play</h2>
@@ -190,18 +217,21 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                     <div className="grid gap-4 md:grid-cols-3">
                         <div className="rounded-xl border border-amber-200 bg-amber-50 p-6 text-center">
                             <div className="mb-2 text-3xl">🎮</div>
-                            <h3 className="text-lg font-semibold text-gray-900">开始游戏</h3>
+                            <h3 className="text-lg font-semibold text-gray-900">开始游戏 · Start</h3>
                             <p className="text-gray-600">躲避障碍，收集 BNB 金币 🪙</p>
+                            <p className="text-xs text-gray-600">Avoid obstacles, collect BNB coins.</p>
                         </div>
                         <div className="rounded-xl border border-red-200 bg-red-50 p-6 text-center">
                             <div className="mb-2 text-3xl">🏆</div>
-                            <h3 className="text-lg font-semibold text-gray-900">冲击高分</h3>
+                            <h3 className="text-lg font-semibold text-gray-900">冲击高分 · Score</h3>
                             <p className="text-gray-600">登上小时榜单，领取🧧</p>
+                            <p className="text-xs text-gray-600">Climb the hourly rewards board to claim red packets.</p>
                         </div>
                         <div className="rounded-xl border border-green-200 bg-green-50 p-6 text-center">
                             <div className="mb-2 text-3xl">💰</div>
-                            <h3 className="text-lg font-semibold text-gray-900">领取奖励</h3>
+                            <h3 className="text-lg font-semibold text-gray-900">领取奖励 · Claim</h3>
                             <p className="text-gray-600">每小时自动结算并发放</p>
+                            <p className="text-xs text-gray-600">Payouts settle automatically every hour.</p>
                         </div>
                     </div>
                 </section>

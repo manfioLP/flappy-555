@@ -32,8 +32,8 @@ export const GAME_CONFIG = {
         scoreInterval: 5, // Increase speed every 5 points
     },
 
-    // Theme (keep, optional)
-    theme: "israeli" as "default" | "israeli",
+    // Theme: "default" | "china" | "bnb"
+    theme: "china" as "default" | "china" | "bnb",
 } as const;
 
 export type GameConfig = typeof GAME_CONFIG;
@@ -50,6 +50,7 @@ export type GameState = (typeof GAME_STATES)[keyof typeof GAME_STATES];
 
 // ==== Colors ====
 export const COLORS = {
+    // default
     sky: "#87CEEB",
     ground: "#98D98E",
     pipe: "#2ECC40",
@@ -58,17 +59,20 @@ export const COLORS = {
     birdEye: "white",
     birdPupil: "black",
     birdBeak: "#FF6B35",
-
-    // extras used by renderer (add these to avoid TS errors)
     groundLine: "rgba(0,0,0,0.2)",
 
-    // israeli theme colors (optional)
-    flagBlue: "#0B5CD5",
-    flagWhite: "#FFFFFF",
-    stoneLight: "#F2E6C9",
-    stoneDark: "#DFCFAC",
-    gold: "#F3C316",
-    olive: "#6b8e23",
+    // china
+    chinaRed: "#D82122",
+    chinaGold: "#FFD54A",
+    chinaDarkRed: "#9E1415",
+    cloudLight: "#FFF3D6",
+    cloudMid: "rgba(255, 217, 160, 0.6)",
+
+    // bnb (Binance)
+    bnbYellow: "#F3BA2F",
+    bnbDark: "#0B0E11",
+    bnbCard: "#111418",
+    bnbGray: "#1C2127",
 } as const;
 
 export type Colors = typeof COLORS;
