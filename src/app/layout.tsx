@@ -5,8 +5,8 @@ import "@solana/wallet-adapter-react-ui/styles.css";
 import {ReactNode} from "react";
 
 export const metadata = {
-    title: 'Meta Muse',
-    description: 'Your Sexy AI assistant for Solana',
+    title: '飞鸟冲天 Flappy BNB',
+    description: 'Your fortune game on BNB',
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
