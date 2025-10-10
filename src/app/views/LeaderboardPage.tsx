@@ -26,6 +26,9 @@ const LoadingRow: React.FC = () => (
     </div>
 );
 
+const getErrorMessage = (e: unknown) =>
+    e instanceof Error ? e.message : String(e);
+
 const formatWallet = (w: string) =>
     w.length > 12 ? `${w.slice(0, 6)}…${w.slice(-4)}` : w;
 
@@ -43,8 +46,8 @@ const LeaderboardPage: React.FC = () => {
             if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             const json = (await resp.json()) as LBResponse;
             setData(json);
-        } catch (e: any) {
-            setErr(e?.message || "Failed to load");
+        } catch (e: unknown) {
+            setErr(getErrorMessage(e));
         } finally {
             setLoading(false);
         }

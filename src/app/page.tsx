@@ -17,7 +17,7 @@ type NavKey = "Info" | "Game" | "RewardsBoard";
 
 const Page: React.FC = () => {
   const [activePage, setActivePage] = useState<NavKey>('Game');
-  const [_tokenBalance, setTokenBalance] = useState(0);
+  const [, setTokenBalance] = useState(0);
   const { connected, publicKey } = useWallet();
 
   useEffect(() => {
