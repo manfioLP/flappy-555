@@ -25,7 +25,7 @@ export async function GET() {
 
         // Do not crash the route; show the error so you can see it in Hosting → Server logs
         console.error("HEALTH DB ERROR:", e?.message, e?.stack);
-        return Response.json({ ok: true, db: "down", error: e?.message ?? "db error", env }, { status: 200 });
+        return Response.json({ ok: true, db: "down", error: e?.message ?? "db error ", env }, { status: 200 });
     }
 }
 
