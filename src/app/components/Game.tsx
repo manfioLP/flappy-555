@@ -21,8 +21,8 @@ const BNB_BG =
 const Game: React.FC = () => {
     const [gameState, setGameState] = useState<GameState>(GAME_STATES.START);
     const [sessionId, setSessionId] = useState<string | null>(null);
-    const [sessionStartTime, setSessionStartTime] = useState<number | null>(null);
-    const [guestId, setGuestId] = useState<string | null>(null);
+    const [_sessionStartTime, setSessionStartTime] = useState<number | null>(null);
+    const [_guestId, setGuestId] = useState<string | null>(null);
 
     const submittedRef = useRef(false);
     const canvasRef = useRef<CanvasHandle | null>(null);

@@ -7,7 +7,7 @@ import React, {
     forwardRef,
     useImperativeHandle,
 } from "react";
-import {GAME_CONFIG, GAME_STATES} from "@/utils/constants";
+import {GAME_CONFIG} from "@/utils/constants";
 import { clearCanvas, drawPipe, drawPlayer } from "@/utils/renderer";
 import {
     updatePlayerPhysics,

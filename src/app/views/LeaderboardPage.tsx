@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState, useCallback } from "react";
-import { Trophy, Coins, Clock } from "lucide-react";
 
 type LBRow = {
     wallet_address: string;

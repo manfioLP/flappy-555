@@ -39,6 +39,7 @@ const ConnectedButton: React.FC = () => {
                             alt="Log out"
                             className="ml-2 w-4 h-4"
                         />
+
                     </button>
                 </>
             )}
