@@ -2,7 +2,6 @@ import React from 'react';
 
 import './globals.css';
 
-// TODO: Change to other toast provider
 import {WaletContextProvider} from '@/contexts/WalletContext';
 import { ContextProvider } from "@/contexts/ContextProvider";
 import {WagmiWalletProvider} from "@/contexts/WasmiConfig";

@@ -1,7 +1,6 @@
 import "./globals.css";
 import LayoutWrapper from './LayoutWrapper';
 
-import "@solana/wallet-adapter-react-ui/styles.css";
 import {ReactNode} from "react";
 
 export const metadata = {
