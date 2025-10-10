@@ -1,26 +1,12 @@
-import {Connection, PublicKey} from '@solana/web3.js';
 
-export const getTokenBalance = async (publicKey: PublicKey) => {
-    if (!publicKey) {
+export const getTokenBalance = async (address: string) => {
+    if (!address) {
         console.log('Wallet not connected');
         return 0;
     }
     try {
-        const tokenMintAddress = new PublicKey('ASEvGp9qiW2LmSCeZGSDM5jxzs8o6iXgnn3ZPqGupump');
-
-        const connection = new Connection(
-            process.env.NEXT_PUBLIC_HELIUS_URL || 'https://api.devnet.solana.com',
-            'confirmed',
-        );
-
-        const walletTokenAccounts = await connection.getParsedTokenAccountsByOwner(publicKey, {
-            mint: tokenMintAddress
-        })
-
-        if(walletTokenAccounts && walletTokenAccounts.value && walletTokenAccounts.value.length > 0){
-            const walletTokenAccount = walletTokenAccounts.value[0]
-            return walletTokenAccount.account.data.parsed.info.tokenAmount.uiAmount
-        }
+        const tokenMintAddress = "tbd";
+        console.log("tokenMintAddress", tokenMintAddress);
 
         return 0;
     } catch (error) {

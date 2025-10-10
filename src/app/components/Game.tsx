@@ -10,7 +10,7 @@ import { useScore } from "@/hooks/useScore";
 import { useImage } from "@/hooks/useImage";
 import { GAME_STATES, GAME_CONFIG } from "@/utils/constants";
 import { submitScore } from "@/services/gameApi";
-import { useWallet } from "@solana/wallet-adapter-react";
+import {useWallet} from "@/contexts/WalletContext";
 
 type GameState = (typeof GAME_STATES)[keyof typeof GAME_STATES];
 type CanvasHandle = { jump: () => void };
@@ -32,7 +32,7 @@ const Game: React.FC = () => {
         GAME_CONFIG.character.imageUrl
     );
 
-    const { publicKey } = useWallet();
+    const { address } = useWallet();
 
     useEffect(() => {
         try {
@@ -68,13 +68,13 @@ const Game: React.FC = () => {
         try {
             const playId = sessionId ?? crypto.randomUUID();
             const walletAddress =
-                publicKey?.toString() ??
+                address?.toString() ??
                 `guest-${(sessionId ?? crypto.randomUUID()).slice(0, 8)}`;
             await submitScore(walletAddress, score, playId);
         } catch (e) {
             console.error("Failed to submit score", e);
         }
-    }, [score, updateHighScore, sessionId, publicKey]);
+    }, [score, updateHighScore, sessionId, address]);
 
     const handleScoreUpdate = useCallback((n: number) => setScore(n), [setScore]);
 

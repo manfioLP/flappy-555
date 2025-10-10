@@ -1,7 +1,8 @@
 import React, {useEffect} from 'react';
 import ConnectWalletButton from "@/app/components/ConnectWalletButton";
-import {useWallet} from "@solana/wallet-adapter-react";
 import {beautifyNumber} from "@/utils";
+import {useWallet} from "@/contexts/WalletContext"
+
 
 interface LowBalancePageProps {
     requiredBalance: number;
@@ -35,20 +36,20 @@ const _getBackgroundStyle = (style: string) => {
 }
 
 const LowBalancePage: React.FC<LowBalancePageProps> = ({requiredBalance, balance, background}) => {
-    const { publicKey, connected} = useWallet()
+    const { address, isConnected} = useWallet()
 
     const style = _getBackgroundStyle(background)
     console.log("style", style)
 
     useEffect(() => {
-        console.log("connected", connected)
-        if (publicKey) {
-            console.log(`connected to wallet ${publicKey}`)
+        console.log("connected", isConnected)
+        if (address) {
+            console.log(`connected to wallet ${address}`)
             console.log("balance", balance)
         }
-    }, [publicKey, connected])
+    }, [address, isConnected])
 
-    if (!connected) {
+    if (!isConnected) {
         return (
             <div className="flex items-center justify-center min-h-screen bg-gray-100">
                 <div

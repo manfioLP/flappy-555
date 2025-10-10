@@ -1,8 +1,8 @@
 import React from "react";
 import { Trophy, Coins, Flame, Clock, Star, Copy, Check, Wallet, ShieldCheck } from "lucide-react";
-import { useWallet } from "@solana/wallet-adapter-react";
 import ConnectWalletButton from "@/app/components/ConnectWalletButton";
 import ConnectedButton from "@/app/components/ConnectedButton";
+import {useWallet} from "@/contexts/WalletContext"
 
 type InfoPageProps = {
     /** Optional: discreet CA pill shows if provided */
@@ -22,7 +22,7 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
         } catch {}
     };
 
-    const { connected } = useWallet();
+    const { isConnected } = useWallet();
 
     return (
         <main
@@ -63,7 +63,7 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                     </div>
 
                     {/* Inline connect banner */}
-                    {!connected && (
+                    {!isConnected && (
                         <div className="mx-auto mt-4 inline-flex items-center gap-3 rounded-xl border border-yellow-300 bg-white/80 px-3 py-2 text-sm text-gray-800 shadow backdrop-blur">
                             <Wallet className="h-4 w-4" />
                             <span className="font-medium">Connect your wallet to earn rewards • 连接钱包以领取奖励</span>
@@ -90,7 +90,7 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                                 <li>No connection = no payout attribution.</li>
                             </ul>
                             <div className="mt-3">
-                                {connected ? <ConnectedButton /> : <ConnectWalletButton size="small" />}
+                                {isConnected ? <ConnectedButton /> : <ConnectWalletButton size="small" />}
                             </div>
                         </div>
 
