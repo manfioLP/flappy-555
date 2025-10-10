@@ -2,6 +2,10 @@
 import { NextResponse } from "next/server";
 import { sql } from "@/services/db";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
+
 // Row type for leaderboard
 export type LBRow = {
     wallet_address: string;
