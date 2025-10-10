@@ -23,7 +23,7 @@ export async function GET() {
             { status: 200 }
         );
     } catch (e) {
-        console.error("healthcheck error:", e);
+        console.error("healthcheck erro sr:", e);
         return Response.json(
             { ok: false, db: "down", error: "db-connection-failed" },
             { status: 500 }
