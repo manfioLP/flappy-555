@@ -58,7 +58,6 @@ const StartScreen: React.FC<StartScreenProps> = ({
             {/* Left-aligned instructions (not centered) */}
             <div className="mt-4 space-y-1 text-sm text-white/85 text-left">
                 <p>避开“蜡烛”🕯️（K 线）/ Avoid the candles (K-lines)!</p>
-                <p>小心“面条”🍜 / Watch out for the noodles!</p>
                 <p>让 CZ 飞！/ Let CZ fly!</p>
                 <p>冲分上榜，🧧 红包每小时发放 / Climb the board—rewards hourly.</p>
                 <p className="text-white/60">加油！起飞！/ Jiāyóu! Time to take off!</p>

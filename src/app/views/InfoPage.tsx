@@ -1,5 +1,8 @@
 import React from "react";
-import { Trophy, Coins, Flame, Clock, Star, Copy, Check } from "lucide-react";
+import { Trophy, Coins, Flame, Clock, Star, Copy, Check, Wallet, ShieldCheck } from "lucide-react";
+import { useWallet } from "@solana/wallet-adapter-react";
+import ConnectWalletButton from "@/app/components/ConnectWalletButton";
+import ConnectedButton from "@/app/components/ConnectedButton";
 
 type InfoPageProps = {
     /** Optional: discreet CA pill shows if provided */
@@ -19,6 +22,8 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
         } catch {}
     };
 
+    const { connected } = useWallet();
+
     return (
         <main
             className="min-h-screen p-4"
@@ -29,7 +34,7 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
         >
             <div className="mx-auto max-w-7xl">
                 {/* HERO */}
-                <section className="mb-8 text-center">
+                <section className="mb-4 text-center">
                     <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-yellow-300/70 bg-white/80 px-4 py-1 text-sm shadow backdrop-blur">
                         <span className="text-lg">🏮</span>
                         <span className="font-medium text-yellow-700">BNB Chain • 币安智能链</span>
@@ -43,10 +48,10 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         中国风好运起飞，冲分赢🧧红包！BNB 金币一路装满~ 🪙
                     </p>
                     <p className="mt-1 text-sm text-gray-500">
-                        Take flight with a Chinese New Year vibe—chase high scores and win red-packet rewards! Stack BNB coins as you go.
+                        Take flight with a Chinese New Year vibe—chase high scores and win red-packet rewards! Stack BNB as you go.
                     </p>
 
-                    {/* “Made for BNB” strip */}
+                    {/* Built for BNB */}
                     <div
                         className="mx-auto mt-4 inline-flex items-center gap-2 rounded-xl px-4 py-1 text-sm font-semibold shadow"
                         style={{ backgroundColor: BNB_YELLOW, color: "#111827" }}
@@ -56,11 +61,62 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         <span>低费用 · 高速度</span>
                         <span className="hidden sm:inline">• Low fees · High throughput</span>
                     </div>
+
+                    {/* Inline connect banner */}
+                    {!connected && (
+                        <div className="mx-auto mt-4 inline-flex items-center gap-3 rounded-xl border border-yellow-300 bg-white/80 px-3 py-2 text-sm text-gray-800 shadow backdrop-blur">
+                            <Wallet className="h-4 w-4" />
+                            <span className="font-medium">Connect your wallet to earn rewards • 连接钱包以领取奖励</span>
+                            <ConnectWalletButton size="small" />
+                        </div>
+                    )}
+                </section>
+
+                {/* WALLET & REWARDS (new) */}
+                <section className="mb-8 rounded-2xl border border-amber-200 bg-white/85 p-5 shadow-lg backdrop-blur">
+                    <div className="mb-3 flex items-center gap-2">
+                        <Wallet className="h-6 w-6" style={{ color: BNB_YELLOW }} />
+                        <h2 className="text-xl font-bold text-gray-900">Wallet & Rewards · 钱包与奖励</h2>
+                    </div>
+
+                    <div className="grid gap-4 md:grid-cols-2">
+                        <div className="rounded-xl border border-slate-200 bg-white p-4">
+                            <p className="text-gray-800">
+                                To receive hourly rewards, you must connect a wallet. We use your address to track high scores and send
+                                payouts.
+                            </p>
+                            <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-gray-700">
+                                <li>Rewards are mapped to your connected address.</li>
+                                <li>No connection = no payout attribution.</li>
+                            </ul>
+                            <div className="mt-3">
+                                {connected ? <ConnectedButton /> : <ConnectWalletButton size="small" />}
+                            </div>
+                        </div>
+
+                        <div className="rounded-xl border border-slate-200 bg-white p-4">
+                            <div className="mb-1 flex items-center gap-2">
+                                <ShieldCheck className="h-5 w-5 text-green-600" />
+                                <p className="font-semibold text-gray-900">Read-only permissions · 只读权限</p>
+                            </div>
+                            <p className="text-sm text-gray-700">
+                                Connecting your wallet <b>only</b> lets us read your public address and balance.
+                                <br />
+                                <span className="text-gray-600">
+                  We will <b>never</b> request token approvals, transfers, or signatures that move funds.
+                </span>
+                            </p>
+                            <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-gray-600">
+                                <li>仅读取地址与余额（不会转移资产）</li>
+                                <li>不请求授权，不发起代币转账，不强制签名</li>
+                            </ul>
+                        </div>
+                    </div>
                 </section>
 
                 {/* TOP INFO STRIP */}
                 <section className="mb-8 grid gap-4 md:grid-cols-3">
-                    {/* Where it lives */}
+                    {/* Network */}
                     <div className="rounded-2xl border border-yellow-200 bg-white/80 p-5 shadow">
                         <div className="mb-2 flex items-center gap-2">
                             <Coins className="h-6 w-6" style={{ color: BNB_YELLOW }} />
@@ -107,9 +163,7 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         >
                             <Trophy className="h-6 w-6 text-black" />
                         </div>
-                        <h2 className="text-2xl font-extrabold text-gray-900 md:text-3xl">
-                            🧧 红包奖池 · Prize Pool
-                        </h2>
+                        <h2 className="text-2xl font-extrabold text-gray-900 md:text-3xl">🧧 红包奖池 · Prize Pool</h2>
                     </div>
 
                     <div className="mb-5 rounded-2xl border border-yellow-200 bg-white/70 p-4">
@@ -121,7 +175,6 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         </p>
                     </div>
 
-                    {/* distribution */}
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                         <div className="rounded-xl border-2 border-yellow-400 bg-gradient-to-br from-yellow-100 to-yellow-200 p-5">
                             <div className="mb-2 flex items-center gap-2">
@@ -167,9 +220,7 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
 
                         <div className="rounded-xl border border-rose-200 bg-rose-50 p-5">
                             <h3 className="mb-1 text-lg font-semibold text-rose-900">说明 · Notes</h3>
-                            <p className="text-sm text-rose-900/80">
-                                无开发者手续费；奖励由开发者钱包直接发放并定期补充。🧧
-                            </p>
+                            <p className="text-sm text-rose-900/80">无开发者手续费；奖励由开发者钱包直接发放并定期补充。🧧</p>
                             <p className="text-xs text-rose-900/70">
                                 No developer fee; rewards come directly from a dev wallet and are topped up periodically.
                             </p>
@@ -193,12 +244,8 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         <p className="text-sm text-gray-600">
                             Token value may be supported by optional <strong>Rebuy & Burn</strong> strategies based on events and community proposals.
                         </p>
-                        <p className="mt-1 text-sm text-gray-500">
-                            重点：奖励来自开发者钱包，无平台抽成；BNB 网络低手续费加持。
-                        </p>
-                        <p className="text-xs text-gray-500">
-                            Key points: rewards via developer wallet, no platform rake; leveraged by BNB’s low fees.
-                        </p>
+                        <p className="mt-1 text-sm text-gray-500">重点：奖励来自开发者钱包，无平台抽成；BNB 网络低手续费加持。</p>
+                        <p className="text-xs text-gray-500">Key points: rewards via developer wallet, no platform rake; powered by BNB’s low fees.</p>
                     </div>
                 </section>
 

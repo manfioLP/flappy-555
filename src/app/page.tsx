@@ -16,7 +16,7 @@ const BNB_BG =
 type NavKey = "Info" | "Game" | "RewardsBoard";
 
 const Page: React.FC = () => {
-  const [activePage, setActivePage] = useState<NavKey>('Game');
+  const [activePage, setActivePage] = useState<NavKey>('Info');
   const [, setTokenBalance] = useState(0);
   const { connected, publicKey } = useWallet();
 
@@ -33,7 +33,7 @@ const Page: React.FC = () => {
       case 'Game':        return <GamePage />;
       case 'RewardsBoard': return <LeaderboardPage />;
       case 'Info':        return <InfoPage />;
-      default:            return <GamePage />;
+      default:            return <InfoPage />;
     }
   };
 

@@ -46,7 +46,7 @@ const HeaderBNB: React.FC<HeaderBNBProps> = ({ active, onChange, connected }) =>
                 {/* Brand (left) */}
                 <div className="flex items-center gap-2">
                     <img
-                        src="/images/img.png"
+                        src="/images/logo.jpeg"
                         alt="Flappy BNB"
                         className="h-6 w-auto"
                     />
