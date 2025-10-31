@@ -8,6 +8,13 @@ type StartScreenProps = {
     imageError?: boolean;
 };
 
+const JUP = {
+    neon: "#00FF9C",
+    glow: "#00FFB2",
+    aqua: "#13FFE2",
+    stroke: "rgba(0,255,156,0.25)",
+};
+
 const StartScreen: React.FC<StartScreenProps> = ({
                                                      onStart,
                                                      highScore,
@@ -15,53 +22,95 @@ const StartScreen: React.FC<StartScreenProps> = ({
                                                      imageError,
                                                  }) => {
     return (
-        <div className="rounded-xl border border-white/10 bg-white/5 text-white p-5 backdrop-blur">
-            {/* Centered header + status + CTA */}
-            <div className="flex flex-col items-center text-center">
-                <h2 className="text-2xl font-extrabold text-red-400">飞鸟冲天 · Flappy BNB 🐉</h2>
-                <p className="mt-1 text-xs text-white/70">
-                    点击或按空格键开始 / Click or press SPACE to start
+        <div
+            className="rounded-2xl p-6 text-white text-center backdrop-blur-xl shadow-lg max-w-md mx-auto"
+            style={{
+                border: `1px solid ${JUP.stroke}`,
+                background: "rgba(6,28,24,0.65)",
+                boxShadow: `0 0 25px ${JUP.neon}22, inset 0 0 10px ${JUP.neon}11`,
+            }}
+        >
+            {/* Header */}
+            <h2
+                className="text-3xl font-extrabold tracking-wide drop-shadow"
+                style={{
+                    color: JUP.neon,
+                    textShadow: `0 0 20px ${JUP.glow}`,
+                }}
+            >
+                Flappy-555 🪐
+            </h2>
+            <p className="mt-1 text-sm" style={{ color: "#BFFFEF" }}>
+                Press <span className="font-bold" style={{ color: JUP.aqua }}>SPACE</span> or click to start
+            </p>
+
+            {/* Loading / Error */}
+            {imageLoading && (
+                <p className="mt-2 text-xs text-emerald-200 animate-pulse">
+                    Loading your cosmic character…
                 </p>
+            )}
+            {imageError && (
+                <p className="mt-2 text-xs text-yellow-300">
+                    Using default Jupiter flyer ✨
+                </p>
+            )}
 
-                {imageLoading && (
-                    <p className="mt-2 text-yellow-300 text-sm animate-pulse">
-                        正在加载自定义角色… / Loading custom character…
-                    </p>
-                )}
-                {imageError && (
-                    <p className="mt-2 text-orange-300 text-sm">
-                        使用默认角色 / Using default character
-                    </p>
-                )}
+            {/* CTA Button */}
+            <div className="mt-4">
+                <Button
+                    size="lg"
+                    onClick={onStart}
+                    className="font-bold tracking-wider px-8 py-2 rounded-xl transition-all text-[#00140F]
+             bg-gradient-to-r from-[#00FF9C] to-[#13FFE2]
+             shadow-[0_0_20px_rgba(0,255,156,0.55)] hover:shadow-[0_0_30px_rgba(0,255,178,0.65)]
+             hover:scale-[1.02] active:scale-[0.98]"
+                >
+                    🚀 Start
+                </Button>
+            </div>
 
-                <div className="mt-3">
-                    {/* Force a red button using className (overrides Button's default styles) */}
-                    <Button
-                        size="lg"
-                        onClick={onStart}
-                        className="bg-red-600 hover:bg-red-500 active:bg-red-700 text-white shadow-lg px-6"
+            {/* High Score */}
+            {highScore > 0 && (
+                <div
+                    className="mt-3 rounded-lg px-4 py-2 text-sm font-semibold"
+                    style={{
+                        border: `1px solid ${JUP.stroke}`,
+                        background: "rgba(0,255,156,0.05)",
+                        color: "#BFFFEF",
+                    }}
+                >
+                    High Score:{" "}
+                    <span
+                        className="font-extrabold"
+                        style={{
+                            color: JUP.neon,
+                            textShadow: `0 0 6px ${JUP.glow}`,
+                        }}
                     >
-                        开始游戏 · Start
-                    </Button>
+            {highScore}
+          </span>
                 </div>
+            )}
 
-                {highScore > 0 && (
-                    <div className="mt-3 rounded-md border border-yellow-400/50 bg-yellow-400/10 px-3 py-2">
-                        <p className="m-0 text-sm">
-                            最高分 / High Score:{" "}
-                            <span className="font-bold text-yellow-300">{highScore}</span>
-                        </p>
-                    </div>
-                )}
+            {/* Instructions */}
+            <div
+                className="mt-6 text-left space-y-1 text-sm"
+                style={{ color: "#CFFFEF" }}
+            >
+                <p>🌀 Avoid the space pipes</p>
+                <p>🪐 Let Jupiter soar across the neon void</p>
+                <p>🏆 Earn points & climb the hourly board</p>
+                <p style={{ color: "#9FFFD9" }}>☄️ Time to take off, pilot!</p>
             </div>
 
-            {/* Left-aligned instructions (not centered) */}
-            <div className="mt-4 space-y-1 text-sm text-white/85 text-left">
-                <p>避开“蜡烛”🕯️（K 线）/ Avoid the candles (K-lines)!</p>
-                <p>让 CZ 飞！/ Let CZ fly!</p>
-                <p>冲分上榜，🧧 红包每小时发放 / Climb the board—rewards hourly.</p>
-                <p className="text-white/60">加油！起飞！/ Jiāyóu! Time to take off!</p>
-            </div>
+            {/* Decorative glow ring */}
+            <div
+                className="absolute inset-0 pointer-events-none rounded-2xl"
+                style={{
+                    boxShadow: `0 0 40px ${JUP.neon}11, 0 0 80px ${JUP.glow}08 inset`,
+                }}
+            />
         </div>
     );
 };

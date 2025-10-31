@@ -306,12 +306,9 @@ export const clearCanvas = (ctx: CanvasRenderingContext2D) => {
     const h = GAME_CONFIG.canvas.height;
 
     switch (GAME_CONFIG.theme) {
-        case "china":
-            drawChinaBackground(ctx, w, h);
-            break;
-        case "bnb":
-            drawBNBBackground(ctx, w, h);
-            break;
+        case "china":   return drawChinaBackground(ctx, w, h);
+        case "bnb":     return drawBNBBackground(ctx, w, h);
+        case "jupiter": return drawJupiterBackground(ctx, w, h); // NEW
         default: {
             const gradient = ctx.createLinearGradient(0, 0, 0, h);
             gradient.addColorStop(0, COLORS.sky);
@@ -332,6 +329,12 @@ export const drawPipe = (
 ) => {
     const w = GAME_CONFIG.pipeWidth;
     const h = GAME_CONFIG.canvas.height;
+
+    if (GAME_CONFIG.theme === "jupiter") {
+        drawJupiterPipe(ctx, pipe.x, 0, w, pipe.topHeight);
+        drawJupiterPipe(ctx, pipe.x, pipe.bottomY, w, h - pipe.bottomY);
+        return;
+    }
 
     if (GAME_CONFIG.theme === "china") {
         // red/gold Chinese banner pipes with caps
@@ -457,3 +460,41 @@ function drawChinaPipeBottom(
     ctx.fillRect(x - 6, y, w + 12, capH);
     drawStar(ctx, x + w / 2, y + capH / 2, 7, 5, COLORS.chinaGold);
 }
+
+function drawJupiterBackground(ctx: CanvasRenderingContext2D, w: number, h: number) {
+    const g = ctx.createLinearGradient(0, 0, 0, h);
+    g.addColorStop(0, COLORS.jupiterDark);
+    g.addColorStop(1, "#041F1C");
+    ctx.fillStyle = g;
+    ctx.fillRect(0, 0, w, h);
+
+    // floating neon stars
+    const t = performance.now() / 1000;
+    for (let i = 0; i < 40; i++) {
+        const x = (i * 80 + t * 50) % (w + 100) - 50;
+        const y = (i * 40 + Math.sin(t + i) * 50) % h;
+        ctx.fillStyle = COLORS.jupiterStar;
+        ctx.globalAlpha = 0.4 + 0.6 * Math.sin(t * 2 + i);
+        ctx.beginPath();
+        ctx.arc(x, y, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+    }
+    ctx.globalAlpha = 1;
+}
+
+function drawJupiterPipe(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number) {
+    const grad = ctx.createLinearGradient(x, y, x + w, y + h);
+    grad.addColorStop(0, COLORS.jupiterPipe);
+    grad.addColorStop(1, COLORS.jupiterPipeGlow);
+    ctx.fillStyle = grad;
+    ctx.fillRect(x, y, w, h);
+
+    // glowing edge
+    ctx.shadowColor = COLORS.jupiterGlow;
+    ctx.shadowBlur = 20;
+    ctx.fillStyle = COLORS.jupiterGlow;
+    ctx.fillRect(x, y, w, 6);
+    ctx.fillRect(x, y + h - 6, w, 6);
+    ctx.shadowBlur = 0;
+}
+

@@ -40,7 +40,15 @@ const GameOverScreen: React.FC<GameOverScreenProps> = ({
             </div>
 
             <div className="mt-3">
-                <Button variant="primary" size="lg" onClick={onRestart}>
+                <Button
+                    variant="primary"
+                    size="lg"
+                    onClick={onRestart}
+                    className="font-bold tracking-wider px-8 py-2 rounded-xl transition-all text-[#00140F]
+             bg-gradient-to-r from-[#00FF9C] to-[#13FFE2]
+             shadow-[0_0_20px_rgba(0,255,156,0.55)] hover:shadow-[0_0_30px_rgba(0,255,178,0.65)]
+             hover:scale-[1.02] active:scale-[0.98]"
+                >
                     Play Again
                 </Button>
             </div>

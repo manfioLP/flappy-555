@@ -4,8 +4,8 @@ import LayoutWrapper from './LayoutWrapper';
 import {ReactNode} from "react";
 
 export const metadata = {
-    title: '飞鸟冲天 Flappy BNB',
-    description: 'Your fortune game on BNB',
+    title: 'Flappy 555',
+    description: 'Your favorite Jupiter game on Solana',
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {

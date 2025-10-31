@@ -33,7 +33,7 @@ export const GAME_CONFIG = {
     },
 
     // Theme: "default" | "china" | "bnb"
-    theme: "china" as "default" | "china" | "bnb",
+    theme: "jupiter" as "default" | "china" | "bnb" | "jupiter",
 } as const;
 
 export type GameConfig = typeof GAME_CONFIG;
@@ -73,6 +73,14 @@ export const COLORS = {
     bnbDark: "#0B0E11",
     bnbCard: "#111418",
     bnbGray: "#1C2127",
+
+    // Jupiter / 555
+    jupiterGreen: "#00FF9C",
+    jupiterDark: "#021013",
+    jupiterGlow: "#00FFB2",
+    jupiterPipe: "#0A3D2E",
+    jupiterPipeGlow: "#13FF89",
+    jupiterStar: "#13FFE2",
 } as const;
 
 export type Colors = typeof COLORS;

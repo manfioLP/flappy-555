@@ -12,27 +12,43 @@ const Game = dynamic(() => import("../components/Game"), {
     ),
 });
 
+const JUP = {
+    neon: "#00FF9C",
+    glow: "#00FFB2",
+    aqua: "#13FFE2",
+    dark: "#021013",
+    dark2: "#041F1C",
+    stroke: "rgba(0,255,156,0.25)",
+    card: "rgba(6, 28, 24, 0.72)",
+};
+
 const GamePage: React.FC = () => {
     return (
         <main className="flex flex-col items-center w-full p-4">
             {/* Header */}
             <section className="w-full max-w-6xl text-center">
-                <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-yellow-300/70 bg-white/80 px-4 py-1 text-sm shadow backdrop-blur">
-                    <span className="text-lg">🏮</span>
-                    <span className="font-medium text-yellow-700">BNB Chain • 币安智能链</span>
-                    <span className="text-lg">🧧</span>
+                <div
+                    className="mx-auto inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm shadow backdrop-blur"
+                    style={{
+                        border: `1px solid ${JUP.stroke}`,
+                        background: "rgba(0,0,0,0.35)",
+                        boxShadow: `0 0 16px ${JUP.neon}22`,
+                    }}
+                >
+                    <span className="text-lg">🪐</span>
+                    <span className="font-medium" style={{color: JUP.aqua}}>
+              Jupiter • Solana
+            </span>
+                    <span className="text-lg">☄️</span>
                 </div>
 
-                <h1 className="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight text-red-700">
-                    飞鸟冲天 · Flappy BNB 🐉
+                <h1 className="mt-3 text-4xl md:text-5xl font-extrabold tracking-tight text-green-400 drop-shadow-lg">
+                    Flappy-555 ☄️
                 </h1>
+                <p className="mt-2 text-base md:text-lg text-green-200">
+                    Dodge pipes, fly through Jupiter space, and chase the leaderboard 🚀
+                </p>
 
-                <p className="mt-2 text-base md:text-lg text-gray-700">
-                    点击或按空格键开始 · Click or press <span className="font-semibold">SPACE</span> to start
-                </p>
-                <p className="text-sm text-gray-500">
-                    躲避管道，攀登高分榜，赢取🧧！Avoid pipes, chase high score, win red packets!
-                </p>
             </section>
 
             {/* Game host */}

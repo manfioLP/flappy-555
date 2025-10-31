@@ -30,9 +30,14 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+.wallet-button-wrapper .wallet-adapter-button {
+  background: linear-gradient(270deg, #00ff9c, #13ffe2, #00ffb2);
+  box-shadow: 0 0 15px rgba(0, 255, 156, 0.6);
+}
+
 .wallet-button-wrapper .wallet-adapter-button:hover {
   transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(255, 117, 140, 0.5);
+  box-shadow: 0 0 25px rgba(19, 255, 137, 0.8);
 }
 
 /* Gradient animation */

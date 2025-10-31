@@ -1,5 +1,16 @@
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 
+/** --- Jupiter / 555 theme palette --- */
+const JUP = {
+    neon: "#00FF9C",
+    glow: "#00FFB2",
+    aqua: "#13FFE2",
+    dark: "#021013",
+    dark2: "#041F1C",
+    card: "rgba(6, 28, 24, 0.72)",
+    stroke: "rgba(0,255,156,0.25)",
+};
+
 type LBRow = {
     wallet_address: string;
     best_score: number;
@@ -14,23 +25,19 @@ type LBResponse = {
     lastround: LBRow[];
 };
 
-const BNB_YELLOW = "#F0B90B";
-
 const LoadingRow: React.FC = () => (
-    <div className="animate-pulse grid grid-cols-12 items-center gap-2 rounded-xl bg-white/60 p-3">
-        <div className="col-span-1 h-4 rounded bg-gray-200" />
-        <div className="col-span-6 h-4 rounded bg-gray-200" />
-        <div className="col-span-2 h-4 rounded bg-gray-200" />
-        <div className="col-span-1 h-4 rounded bg-gray-200" />
-        <div className="col-span-2 h-4 rounded bg-gray-200" />
+    <div className="animate-pulse grid grid-cols-12 items-center gap-2 rounded-xl p-3"
+         style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${JUP.stroke}` }}>
+        <div className="col-span-1 h-4 rounded" style={{ background: "rgba(255,255,255,0.06)" }} />
+        <div className="col-span-6 h-4 rounded" style={{ background: "rgba(255,255,255,0.06)" }} />
+        <div className="col-span-2 h-4 rounded" style={{ background: "rgba(255,255,255,0.06)" }} />
+        <div className="col-span-1 h-4 rounded" style={{ background: "rgba(255,255,255,0.06)" }} />
+        <div className="col-span-2 h-4 rounded" style={{ background: "rgba(255,255,255,0.06)" }} />
     </div>
 );
 
-const getErrorMessage = (e: unknown) =>
-    e instanceof Error ? e.message : String(e);
-
-const formatWallet = (w: string) =>
-    w.length > 12 ? `${w.slice(0, 6)}…${w.slice(-4)}` : w;
+const getErrorMessage = (e: unknown) => (e instanceof Error ? e.message : String(e));
+const formatWallet = (w: string) => (w.length > 12 ? `${w.slice(0, 6)}…${w.slice(-4)}` : w);
 
 const LeaderboardPage: React.FC = () => {
     const [data, setData] = useState<LBResponse | null>(null);
@@ -75,102 +82,113 @@ const LeaderboardPage: React.FC = () => {
             timeZone: "UTC",
         }) + " UTC";
 
+    const BG =
+        "radial-gradient(900px 600px at 50% 0%, rgba(0,255,156,0.12), transparent), \
+         radial-gradient(1000px 500px at 100% 100%, rgba(19,255,137,0.08), transparent), \
+         linear-gradient(135deg, #021013 0%, #041F1C 100%)";
+
     return (
-        <main
-            className="min-h-screen w-full p-4"
-            style={{
-                background:
-                    "radial-gradient(1200px 600px at 20% -10%, rgba(240,185,11,0.18), transparent), radial-gradient(1000px 500px at 120% 10%, rgba(220,38,38,0.10), transparent), linear-gradient(135deg, #fff 0%, #fffbe6 35%, #fff 100%)",
-            }}
-        >
+        <main className="min-h-screen w-full p-4" style={{ background: BG, color: "white" }}>
             <section className="mx-auto w-full max-w-6xl">
                 {/* Header */}
                 <div className="mb-6 text-center">
-                    <div className="mx-auto inline-flex items-center gap-2 rounded-full border border-yellow-300/70 bg-white/80 px-4 py-1 text-sm shadow backdrop-blur">
-                        <span className="text-lg">🏮</span>
-                        <span className="font-medium text-yellow-700">BNB Chain • 币安智能链</span>
-                        <span className="text-lg">🧧</span>
+                    <div
+                        className="mx-auto inline-flex items-center gap-2 rounded-full px-4 py-1 text-sm shadow backdrop-blur"
+                        style={{
+                            border: `1px solid ${JUP.stroke}`,
+                            background: "rgba(0,0,0,0.35)",
+                            boxShadow: `0 0 16px ${JUP.neon}22`,
+                        }}
+                    >
+                        <span className="text-lg">🪐</span>
+                        <span className="font-medium" style={{ color: JUP.aqua }}>
+              Jupiter • Solana
+            </span>
+                        <span className="text-lg">☄️</span>
                     </div>
 
-                    <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-gray-900">
-                        排行榜 · Rewards Board
+                    <h1
+                        className="mt-3 text-4xl font-extrabold tracking-tight drop-shadow"
+                        style={{ color: JUP.neon, textShadow: `0 0 18px ${JUP.glow}` }}
+                    >
+                        Flappy-555 Leaderboard
                     </h1>
-                    <p className="mt-1 text-gray-700">
-                        每 10 秒自动刷新；展示本小时与历史总榜。<span className="ml-1">⏱️</span>
-                    </p>
-                    <p className="text-sm text-gray-500">
-                        Auto-refreshes every 10 seconds; shows this hour and overall leaders.
+                    <p className="mt-1 text-sm" style={{ color: "#C6FFF0" }}>
+                        Auto-refreshes every 10s • Current hour & overall standings
                     </p>
                 </div>
 
                 {/* Tabs */}
                 <div className="mb-4 flex justify-center">
-                    <div className="inline-flex rounded-xl border border-slate-200 bg-white/70 p-1 shadow-sm backdrop-blur">
+                    <div
+                        className="inline-flex rounded-xl p-1 shadow-sm backdrop-blur"
+                        style={{ border: `1px solid ${JUP.stroke}`, background: "rgba(255,255,255,0.03)" }}
+                    >
                         <button
                             onClick={() => setTab("lastround")}
-                            className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-                                tab === "lastround"
-                                    ? "text-black"
-                                    : "text-slate-700 hover:bg-slate-100"
-                            }`}
+                            className="rounded-lg px-4 py-2 text-sm font-semibold transition"
                             style={
                                 tab === "lastround"
-                                    ? { backgroundColor: BNB_YELLOW }
-                                    : undefined
+                                    ? {
+                                        background: `linear-gradient(90deg, ${JUP.neon}, ${JUP.aqua})`,
+                                        color: "#00140F",
+                                        boxShadow: `0 0 18px ${JUP.neon}66`,
+                                    }
+                                    : { color: "#BFFFEF" }
                             }
                         >
-                            本小时 ⏱️ <span className="ml-1 hidden sm:inline">/ This Hour</span>
+                            This Hour ⏱️
                         </button>
                         <button
                             onClick={() => setTab("overall")}
-                            className={`rounded-lg px-4 py-2 text-sm font-semibold ${
-                                tab === "overall"
-                                    ? "text-black"
-                                    : "text-slate-700 hover:bg-slate-100"
-                            }`}
+                            className="rounded-lg px-4 py-2 text-sm font-semibold transition"
                             style={
-                                tab === "overall" ? { backgroundColor: BNB_YELLOW } : undefined
+                                tab === "overall"
+                                    ? {
+                                        background: `linear-gradient(90deg, ${JUP.neon}, ${JUP.aqua})`,
+                                        color: "#00140F",
+                                        boxShadow: `0 0 18px ${JUP.neon}66`,
+                                    }
+                                    : { color: "#BFFFEF" }
                             }
                         >
-                            历史总榜 🏆 <span className="ml-1 hidden sm:inline">/ Overall</span>
+                            Overall 🏆
                         </button>
                     </div>
                 </div>
 
                 {/* Error */}
                 {err && (
-                    <div className="mx-auto mb-4 max-w-2xl rounded-xl border border-rose-200 bg-rose-50 p-3 text-center">
-                        <p className="text-rose-700">
-                            加载失败：{err}
-                            <span className="ml-1 text-rose-600/80">/ Failed to load</span>
-                        </p>
+                    <div
+                        className="mx-auto mb-4 max-w-2xl rounded-xl p-3 text-center"
+                        style={{
+                            border: "1px solid rgba(255, 99, 132, 0.3)",
+                            background: "rgba(255, 99, 132, 0.08)",
+                            color: "#ff9fb0",
+                        }}
+                    >
+                        Failed to load: {err}
                     </div>
                 )}
 
                 {/* Table-ish list */}
-                <div className="rounded-2xl border border-slate-200 bg-white/80 p-2 shadow backdrop-blur">
-                    <div className="grid grid-cols-12 items-center gap-2 rounded-lg bg-slate-50 p-3 text-[11px] font-semibold text-slate-600 md:text-xs">
-                        <div className="col-span-1 text-center">排名</div>
-                        <div className="col-span-6">钱包地址</div>
-                        <div className="col-span-2 text-right">最佳分数</div>
-                        <div className="col-span-1 text-right">次数</div>
-                        <div className="col-span-2 text-right">最近游戏</div>
-
-                        <div className="col-span-1 text-center hidden md:block text-[10px] text-slate-500">
-                            #
-                        </div>
-                        <div className="col-span-6 hidden md:block text-[10px] text-slate-500">
-                            Wallet
-                        </div>
-                        <div className="col-span-2 hidden md:block text-right text-[10px] text-slate-500">
-                            Best
-                        </div>
-                        <div className="col-span-1 hidden md:block text-right text-[10px] text-slate-500">
-                            Plays
-                        </div>
-                        <div className="col-span-2 hidden md:block text-right text-[10px] text-slate-500">
-                            Last Play (UTC)
-                        </div>
+                <div
+                    className="rounded-2xl p-2 shadow backdrop-blur"
+                    style={{
+                        border: `1px solid ${JUP.stroke}`,
+                        background: JUP.card,
+                        boxShadow: `inset 0 0 0 1px rgba(255,255,255,0.02), 0 10px 40px ${JUP.neon}14`,
+                    }}
+                >
+                    <div
+                        className="grid grid-cols-12 items-center gap-2 rounded-lg p-3 text-[11px] font-semibold md:text-xs"
+                        style={{ background: "rgba(255,255,255,0.03)", color: "#9FFFD9" }}
+                    >
+                        <div className="col-span-1 text-center">#</div>
+                        <div className="col-span-6">Wallet</div>
+                        <div className="col-span-2 text-right">Best</div>
+                        <div className="col-span-1 text-right">Plays</div>
+                        <div className="col-span-2 text-right">Last Play (UTC)</div>
                     </div>
 
                     <div className="space-y-2 p-2">
@@ -185,11 +203,11 @@ const LeaderboardPage: React.FC = () => {
                         )}
 
                         {!loading && rows.length === 0 && (
-                            <div className="rounded-xl bg-slate-50 p-6 text-center text-slate-500">
-                                暂无记录，成为第一个冲分的勇士吧！🧧
-                                <div className="text-xs text-slate-500">
-                                    No entries yet — be the first to score big!
-                                </div>
+                            <div
+                                className="rounded-xl p-6 text-center"
+                                style={{ background: "rgba(255,255,255,0.03)", color: "#BFFFEF" }}
+                            >
+                                No entries yet — be the first to score big! 🚀
                             </div>
                         )}
 
@@ -197,22 +215,28 @@ const LeaderboardPage: React.FC = () => {
                             rows.map((r, i) => (
                                 <div
                                     key={`${r.wallet_address}-${r.last_play}-${r.best_score}-${i}`}
-                                    className="grid grid-cols-12 items-center gap-2 rounded-xl bg-white p-3 hover:bg-slate-50"
+                                    className="grid grid-cols-12 items-center gap-2 rounded-xl p-3 transition"
+                                    style={{
+                                        background: "rgba(255,255,255,0.03)",
+                                        border: `1px solid ${JUP.stroke}`,
+                                    }}
                                 >
-                                    <div className="col-span-1 text-center font-semibold text-slate-700">
+                                    <div className="col-span-1 text-center font-semibold" style={{ color: "#E7FFF6" }}>
                                         {i + 1}
                                     </div>
-                                    <div className="col-span-6 truncate font-mono text-sm text-slate-800">
+                                    <div className="col-span-6 truncate font-mono text-sm" style={{ color: "#E7FFF6" }}>
                                         {formatWallet(r.wallet_address)}
                                     </div>
-                                    <div className="col-span-2 text-right text-lg font-extrabold"
-                                         style={{ color: BNB_YELLOW }}>
+                                    <div
+                                        className="col-span-2 text-right text-lg font-extrabold"
+                                        style={{ color: JUP.neon, textShadow: `0 0 12px ${JUP.glow}` }}
+                                    >
                                         {r.best_score}
                                     </div>
-                                    <div className="col-span-1 text-right text-slate-700">
+                                    <div className="col-span-1 text-right" style={{ color: "#BFFFEF" }}>
                                         {r.plays}
                                     </div>
-                                    <div className="col-span-2 text-right text-[11px] text-slate-500">
+                                    <div className="col-span-2 text-right text-[11px]" style={{ color: "#9FFFD9" }}>
                                         {formatUtc(r.last_play)}
                                     </div>
                                 </div>
@@ -222,11 +246,8 @@ const LeaderboardPage: React.FC = () => {
 
                 {/* Footnote */}
                 {data && (
-                    <p className="mt-3 text-center text-xs text-slate-600">
-                        统计范围：{data.meta.round === "current_hour" ? "本小时" : "上一小时"}（UTC）
-                        <span className="mx-1">•</span>
-                        Scope: {data.meta.round.replace("_", " ")} (UTC).{" "}
-                        <span className="ml-1">🐉🪙</span>
+                    <p className="mt-3 text-center text-xs" style={{ color: "#9FFFD9" }}>
+                        Scope: {data.meta.round.replace("_", " ")} (UTC). <span className="ml-1">🪐☄️</span>
                     </p>
                 )}
             </section>
