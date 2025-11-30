@@ -7,10 +7,10 @@ export const GAME_CONFIG = {
     jumpPower: -8,
     pipeWidth: 60,
     pipeGap: 150,
-    initialPipeSpeed: 3,
-    speedIncrement: 0.5,
-    maxSpeed: 7,
-    pipeFrequency: 90,
+    initialPipeSpeed: 2.4,
+    speedIncrement: 0.4,
+    maxSpeed: 6.5,
+    pipeFrequency: 110,
 
     // Character settings
     character: {
