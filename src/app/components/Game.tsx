@@ -94,25 +94,7 @@ const Game: React.FC = () => {
             style={{ background: JUPITER_BG }}
         >
             <div className="mx-auto flex w-full max-w-6xl items-center justify-center px-1 sm:px-2">
-                <div
-                    className="relative w-full rounded-2xl overflow-hidden shadow-2xl backdrop-blur-[0.5px]"
-                    style={{
-                        aspectRatio: "2 / 3",
-                        // Fit within both viewport height and width while keeping the 2:3 frame
-                        // On tall screens, the width clamps first; on short screens, the height wins
-                        // so we never overflow the visible area.
-                        // --- configurable clamps ---
-                        // width: up to 500px but no more than 92vw
-                        // height: up to 780px but no more than 88svh
-                        // --- final size ---
-                        // pick the smaller of the allowed width and the width implied by the allowed height
-                        // so aspect ratio stays close to 2:3 without breaking layout
-                        ["--frame-max-width" as string]: "min(92vw, 500px)",
-                        ["--frame-max-height" as string]: "min(88svh, 780px)",
-                        width: "min(var(--frame-max-width), calc(var(--frame-max-height) * 0.6667))",
-                        height: "min(var(--frame-max-height), calc(var(--frame-max-width) * 1.5))",
-                    }}
-                >
+                <div className="relative w-full max-w-[520px] sm:max-w-3xl aspect-[2/3] rounded-2xl overflow-hidden shadow-2xl backdrop-blur-[0.5px]">
                     <Canvas
                         ref={canvasRef}
                         gameState={gameState}

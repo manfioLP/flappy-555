@@ -3,14 +3,14 @@
 // ==== Game config ====
 export const GAME_CONFIG = {
     // Game settings
-    gravity: 0.32,
-    jumpPower: -7.5,
+    gravity: 0.45,
+    jumpPower: -8,
     pipeWidth: 60,
-    pipeGap: 210,
-    initialPipeSpeed: 1.5,
-    speedIncrement: 0.18,
-    maxSpeed: 3.2,
-    pipeFrequency: 170,
+    pipeGap: 150,
+    initialPipeSpeed: 2.4,
+    speedIncrement: 0.4,
+    maxSpeed: 6.5,
+    pipeFrequency: 110,
 
     // Character settings
     character: {
