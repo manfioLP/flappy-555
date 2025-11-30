@@ -61,7 +61,7 @@ const Canvas = forwardRef<CanvasHandle, CanvasProps>(
 
         useImperativeHandle(ref, () => ({
             jump: () => {
-                if (gameState === "PLAYING") applyJump(playerRef.current);
+                if (gameState === "playing") applyJump(playerRef.current);
             },
         }));
 
@@ -167,6 +167,15 @@ const Canvas = forwardRef<CanvasHandle, CanvasProps>(
             handleJump();
         }, [handleJump]);
 
+        const handleCanvasTouch = useCallback(
+            (event: React.TouchEvent<HTMLCanvasElement>) => {
+                // Prevent the default double-tap zoom on mobile browsers
+                event.preventDefault();
+                handleJump();
+            },
+            [handleJump]
+        );
+
         return (
             <canvas
                 ref={canvasRef}
@@ -174,8 +183,9 @@ const Canvas = forwardRef<CanvasHandle, CanvasProps>(
                 height={GAME_CONFIG.canvas.height}
                 className="block w-full h-full"
                 onClick={handleCanvasClick}
+                onTouchStart={handleCanvasTouch}
                 // No explicit background color; lets the parent gradient show through
-                style={{ backgroundColor: "transparent" }}
+                style={{ backgroundColor: "transparent", touchAction: "manipulation" }}
             />
         );
     }
