@@ -94,16 +94,7 @@ const Game: React.FC = () => {
             style={{ background: JUPITER_BG }}
         >
             <div className="mx-auto flex w-full max-w-6xl items-center justify-center px-1 sm:px-2">
-                <div
-                    className="relative w-full rounded-2xl overflow-hidden shadow-2xl backdrop-blur-[0.5px]"
-                    style={{
-                        aspectRatio: "2 / 3",
-                        width: "min(92vw, 560px)",
-                        maxWidth: "560px",
-                        height: "min(92svh, calc(min(92vw, 560px) * 1.5))",
-                        maxHeight: "82vh",
-                    }}
-                >
+                <div className="relative w-full max-w-[520px] sm:max-w-3xl aspect-[2/3] rounded-2xl overflow-hidden shadow-2xl backdrop-blur-[0.5px]">
                     <Canvas
                         ref={canvasRef}
                         gameState={gameState}
