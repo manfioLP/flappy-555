@@ -90,11 +90,20 @@ const Game: React.FC = () => {
 
     return (
         <main
-            className="w-full rounded-3xl border border-yellow-200/50 p-4 shadow-inner"
+            className="w-full rounded-3xl border border-yellow-200/50 p-3 sm:p-4 shadow-inner"
             style={{ background: JUPITER_BG }}
         >
-            <div className="mx-auto flex w-full max-w-6xl items-center justify-center">
-                <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-2xl backdrop-blur-[0.5px]">
+            <div className="mx-auto flex w-full max-w-6xl items-center justify-center px-1 sm:px-2">
+                <div
+                    className="relative w-full rounded-2xl overflow-hidden shadow-2xl backdrop-blur-[0.5px]"
+                    style={{
+                        aspectRatio: "2 / 3",
+                        width: "min(92vw, 560px)",
+                        maxWidth: "560px",
+                        height: "min(92svh, calc(min(92vw, 560px) * 1.5))",
+                        maxHeight: "82vh",
+                    }}
+                >
                     <Canvas
                         ref={canvasRef}
                         gameState={gameState}
