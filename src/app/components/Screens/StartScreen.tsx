@@ -41,7 +41,7 @@ const StartScreen: React.FC<StartScreenProps> = ({
                 Flappy-555 🪐
             </h2>
             <p className="mt-1 text-sm" style={{ color: "#BFFFEF" }}>
-                Press <span className="font-bold" style={{ color: JUP.aqua }}>SPACE</span> or click to start
+                Tap, click, or press <span className="font-bold" style={{ color: JUP.aqua }}>SPACE</span> to start
             </p>
 
             {/* Loading / Error */}
