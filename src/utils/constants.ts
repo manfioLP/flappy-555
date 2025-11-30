@@ -6,11 +6,11 @@ export const GAME_CONFIG = {
     gravity: 0.45,
     jumpPower: -8,
     pipeWidth: 60,
-    pipeGap: 190,
-    initialPipeSpeed: 1.8,
-    speedIncrement: 0.25,
-    maxSpeed: 4.5,
-    pipeFrequency: 140,
+    pipeGap: 150,
+    initialPipeSpeed: 2.4,
+    speedIncrement: 0.4,
+    maxSpeed: 6.5,
+    pipeFrequency: 110,
 
     // Character settings
     character: {
