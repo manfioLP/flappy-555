@@ -3,8 +3,8 @@
 // ==== Game config ====
 export const GAME_CONFIG = {
     // Game settings
-    gravity: 0.45,
-    jumpPower: -8,
+    gravity: 0.3,
+    jumpPower: -5,
     pipeWidth: 60,
     pipeGap: 150,
     initialPipeSpeed: 2.4,
