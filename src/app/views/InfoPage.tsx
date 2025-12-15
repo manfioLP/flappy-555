@@ -78,7 +78,8 @@ const InfoPage: React.FC<InfoPageProps> = ({ contractAddress }) => {
                         Futurish. 🚀
                     </p>
                     <p className="mt-1 text-sm" style={{ color: "#9FFFD9" }}>
-                        Built for the Jupiter/555 vibe on Solana — low fees, high speed, pure glow.
+                        Built for the Jupiter/555 vibe on Solana — <br/>
+                        CA - D71e1ZZWrXArB77ersVtBLVRJ7kbVzBjZfgGm7sZjups
                     </p>
 
                     {/* Inline connect banner */}
