@@ -1,10 +1,10 @@
 "use client";
 
 import React from "react";
-import { useAccount } from "wagmi";
 import { useIsClient } from "@/hooks/useIsClient";
 import ConnectWalletButton from "@/app/components/ConnectWalletButton";
 import ConnectedButton from "@/app/components/ConnectedButton";
+import { useWallet } from "@/contexts/WalletContext";
 
 type Props = {
     active: "Info" | "Game" | "RewardsBoard";
@@ -20,7 +20,7 @@ const JUP = {
 
 export default function HeaderBNB({ active, onChange }: Props) {
     const isClient = useIsClient();
-    const { isConnected } = useAccount();
+    const { isConnected } = useWallet();
 
     const tabs: { key: Props["active"]; label: string }[] = [
         { key: "Info", label: "Rules" },

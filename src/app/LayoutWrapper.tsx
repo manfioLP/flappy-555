@@ -2,9 +2,9 @@ import React from 'react';
 
 import './globals.css';
 
+import { SolanaWalletProvider } from '@/contexts/SolanaWalletProvider';
 import {WaletContextProvider} from '@/contexts/WalletContext';
 import { ContextProvider } from "@/contexts/ContextProvider";
-import {WagmiWalletProvider} from "@/contexts/WasmiConfig";
 
 // Providers
 
@@ -19,13 +19,13 @@ type LayoutWrapperProps = {
 
 const LayoutWrapper: React.FC<LayoutWrapperProps> = ({ children }) => {
     return (
-        <WagmiWalletProvider>
+        <SolanaWalletProvider>
             <WaletContextProvider>
                 <ContextProvider>
                     {children}
                 </ContextProvider>
             </WaletContextProvider>
-        </WagmiWalletProvider>
+        </SolanaWalletProvider>
     );
 };
 

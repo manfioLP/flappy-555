@@ -1,12 +1,12 @@
 "use client";
 import React from "react";
-import { useAccount, useDisconnect } from "wagmi";
+import { useWallet } from "@/contexts/WalletContext";
 
-const shorten = (a?: `0x${string}`) => (a ? `${a.slice(0,6)}…${a.slice(-4)}` : "");
+const shorten = (address?: string | null) =>
+    address ? `${address.slice(0, 5)}...${address.slice(-5)}` : "";
 
 export default function ConnectedButton() {
-    const { address, isConnected } = useAccount();
-    const { disconnect } = useDisconnect();
+    const { address, isConnected, disconnect } = useWallet();
 
     if (!isConnected) return null;
 

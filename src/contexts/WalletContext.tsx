@@ -1,43 +1,38 @@
 "use client";
 
 import React, { createContext, useContext, useMemo } from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useWallet as useSolanaWallet } from "@solana/wallet-adapter-react";
 
-type EvmWalletCtx = {
-    address: `0x${string}` | null;
+type WalletCtx = {
+    address: string | null;
     isConnected: boolean;
     connect: () => Promise<void>;
     disconnect: () => Promise<void>;
 };
 
-const Ctx = createContext<EvmWalletCtx | null>(null);
+const Ctx = createContext<WalletCtx | null>(null);
 
 export function WaletContextProvider({ children }: { children: React.ReactNode }) {
-    const { address, isConnected } = useAccount();
-    const { connect, connectors } = useConnect();
-    const { disconnect } = useDisconnect();
+    const { publicKey, connected, connect, disconnect } = useSolanaWallet();
 
-    const value = useMemo<EvmWalletCtx>(() => {
-        const injected = connectors.find((c) => c.id === "injected") ?? connectors[0];
-
+    const value = useMemo<WalletCtx>(() => {
         return {
-            address: address ?? null,
-            isConnected,
+            address: publicKey?.toBase58() ?? null,
+            isConnected: connected,
             connect: async () => {
-                if (!injected) throw new Error("No EVM connector available");
-                await connect({ connector: injected });
+                await connect();
             },
             disconnect: async () => {
                 await disconnect();
             },
         };
-    }, [address, isConnected, connect, connectors, disconnect]);
+    }, [publicKey, connected, connect, disconnect]);
 
     return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
 export const useWallet = () => {
     const v = useContext(Ctx);
-    if (!v) throw new Error("useEvmWallet must be used within EvmWalletContextProvider");
+    if (!v) throw new Error("useWallet must be used within WaletContextProvider");
     return v;
 };
