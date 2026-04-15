@@ -1,12 +1,20 @@
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";   // writes should not be cached
 
-import { sql } from "@/services/db";
+import { getSql } from "@/services/db";
 
 type Body = { walletAddress?: string; score?: number; playId?: string };
 
 export async function POST(req: Request) {
     try {
+        const sql = getSql();
+        if (!sql) {
+            return Response.json(
+                { ok: false, error: "Score database is not configured", code: "DB_MISSING_ENV" },
+                { status: 503 }
+            );
+        }
+
         const body = (await req.json().catch(() => null)) as Body | null;
         if (!body) {
             return Response.json({ ok: false, error: "Invalid JSON" }, { status: 400 });
@@ -36,6 +44,7 @@ export async function POST(req: Request) {
         return Response.json({ ok: true }, { status: 201 });
     } catch (e) {
         console.error("POST /api/scores error", e);
-        return Response.json({ ok: false, error: "Server error" }, { status: 500 });
+        const message = e instanceof Error ? e.message : "Server error";
+        return Response.json({ ok: false, error: message, code: "SCORE_WRITE_FAILED" }, { status: 500 });
     }
 }

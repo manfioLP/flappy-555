@@ -1,7 +1,12 @@
 // services/db/index.ts
 import { neon } from '@neondatabase/serverless';
 
-const url = process.env.NEON_DATABASE_URL;
-if (!url) throw new Error('NEON_DATABASE_URL is not set');
+export function hasDbConfig() {
+    return Boolean(process.env.NEON_DATABASE_URL);
+}
 
-export const sql = neon(url);
+export function getSql() {
+    const url = process.env.NEON_DATABASE_URL;
+    if (!url) return null;
+    return neon(url);
+}

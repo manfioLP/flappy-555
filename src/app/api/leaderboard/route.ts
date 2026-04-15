@@ -1,6 +1,6 @@
 // src/app/api/leaderboard/route.ts
 import { NextResponse } from "next/server";
-import { sql } from "@/services/db";
+import { getSql, hasDbConfig } from "@/services/db";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -16,6 +16,14 @@ export type LBRow = {
 
 export async function GET(req: Request) {
     try {
+        const sql = getSql();
+        if (!sql || !hasDbConfig()) {
+            return NextResponse.json(
+                { ok: false, error: "Leaderboard database is not configured", code: "DB_MISSING_ENV" },
+                { status: 503 }
+            );
+        }
+
         const { searchParams } = new URL(req.url);
         const topRaw = parseInt(String(searchParams.get("top") ?? "20"), 10);
         const top = Math.min(Math.max(Number.isFinite(topRaw) ? topRaw : 20, 1), 200);
@@ -66,6 +74,7 @@ export async function GET(req: Request) {
         });
     } catch (e: unknown) {
         console.error("Leaderboard error:", e);
-        return NextResponse.json({ ok: false, error: "Internal Server Error" }, { status: 500 });
+        const message = e instanceof Error ? e.message : "Internal Server Error";
+        return NextResponse.json({ ok: false, error: message, code: "LEADERBOARD_QUERY_FAILED" }, { status: 500 });
     }
 }

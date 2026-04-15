@@ -23,6 +23,8 @@ type LBResponse = {
     meta: { top: number; round: "current_hour" | "previous_hour" };
     overall: LBRow[];
     lastround: LBRow[];
+    error?: string;
+    code?: string;
 };
 
 const LoadingRow: React.FC = () => (
@@ -50,8 +52,10 @@ const LeaderboardPage: React.FC = () => {
         setErr(null);
         try {
             const resp = await fetch("/api/leaderboard?top=20", { cache: "no-store" });
-            if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
             const json = (await resp.json()) as LBResponse;
+            if (!resp.ok || !json.ok) {
+                throw new Error(json.error || `HTTP ${resp.status}`);
+            }
             setData(json);
         } catch (e: unknown) {
             setErr(getErrorMessage(e));

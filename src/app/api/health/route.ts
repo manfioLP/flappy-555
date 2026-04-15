@@ -1,13 +1,14 @@
 export const runtime = "nodejs";
 export const revalidate = 0;
 
-import { sql } from "@/services/db";
+import { getSql, hasDbConfig } from "@/services/db";
 
 
 export async function GET() {
     const env = {
-        hasNEON: !!process.env.NEON_DATABASE_URL,
-        hasBsc: !!process.env.NEXT_PUBLIC_BSC_RPC_URL,
+        hasNEON: hasDbConfig(),
+        hasSolanaRpc: !!process.env.NEXT_PUBLIC_SOLANA_RPC_URL,
+        hasHelius: !!process.env.NEXT_PUBLIC_HELIUS_URL,
         node: process.version,
     };
 
@@ -18,6 +19,10 @@ export async function GET() {
     }
 
     try {
+        const sql = getSql();
+        if (!sql) {
+            return Response.json({ ok: true, db: "missing-env", env }, { status: 200 });
+        }
         const rows = await sql/* sql */`SELECT now() as ts;`;
         return Response.json({ ok: true, db: "up", ts: rows?.[0]?.ts ?? null, env }, { status: 200 });
     } catch (err: unknown) {
@@ -28,4 +33,3 @@ export async function GET() {
         return Response.json({ ok: true, db: "down", error: e?.message ?? "db error ", env }, { status: 200 });
     }
 }
-
