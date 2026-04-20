@@ -1,16 +1,6 @@
 "use client";
 
 import React from "react";
-import dynamic from "next/dynamic";
-
-const Game = dynamic(() => import("../components/Game"), {
-    ssr: false,
-    loading: () => (
-        <div className="w-full max-w-6xl mt-8 text-center text-gray-500">
-            Loading game…
-        </div>
-    ),
-});
 
 const JUP = {
     neon: "#00FF9C",
@@ -36,9 +26,9 @@ const GamePage: React.FC = () => {
                     }}
                 >
                     <span className="text-lg">🪐</span>
-                    <span className="font-medium" style={{color: JUP.aqua}}>
-              Jupiter • Solana
-            </span>
+                    <span className="font-medium" style={{ color: JUP.aqua }}>
+                        Jupiter • Solana
+                    </span>
                     <span className="text-lg">☄️</span>
                 </div>
 
@@ -48,13 +38,16 @@ const GamePage: React.FC = () => {
                 <p className="mt-2 text-base md:text-lg text-green-200">
                     Dodge pipes, fly through Jupiter space, and chase the leaderboard 🚀
                 </p>
-
             </section>
 
             {/* Game host */}
             <section className="w-full max-w-6xl mt-6">
-                <div className="grid grid-cols-1 gap-6">
-                    <Game />
+                <div className="w-full h-[70vh] rounded-xl overflow-hidden shadow-lg border border-green-500/20">
+                    <iframe
+                        src="/flappybird/index.html"
+                        className="w-full h-full border-0"
+                        allow="autoplay; fullscreen"
+                    ></iframe>
                 </div>
             </section>
         </main>
